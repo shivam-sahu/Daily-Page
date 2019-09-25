@@ -1,6 +1,6 @@
 # Daily Page
 
-Digital Diary with features to keep notes and add remainders.
+A Digital Diary is a simple way to keep your personal thoughts and feelings both accessible and private, giving you a confidential way to express yourself.
 
 ## To Build
 
