@@ -4,7 +4,11 @@
   "description": "Digital Dairy with additional features.",
   "main": "server/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install-dep": "npm install && cd client && npm install && cd ..",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-front-end": "npm start --prefix client",
+    "start-back-end": "nodemon server/server.js",
+    "dev": "concurrently \"npm run start-front-end\" \"npm run start-back-end\" "
   },
   "author": "",
   "license": "ISC",

@@ -4,8 +4,8 @@ A Digital Diary is a simple way to keep your personal thoughts and feelings both
 
 ## To Build
 
-Firstly install dependencies using `npm install` and `npm run client-install`, use `npm run dev` to start both React and Node dev servers together , \
-React server is on port 5000 while Node server is on port 3000 (localhost)
+Firstly install dependencies (both back-end and front-end) using `npm run install-dep`, use `npm run dev` to start both react and node dev servers together , \
+react server is on port 8000 while node server is on port 3001 (localhost)
 
 ## Keys
 
