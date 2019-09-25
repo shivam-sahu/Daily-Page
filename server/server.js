@@ -26,14 +26,16 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
   .catch(err => console.log(err));
 
 //? passport middleware
-app.use(passport.initialize());
+// app.use(passport.initialize());
 
 //? passport config
-require('./config/passport')(passport);
+// require('./config/passport')(passport);
 
 //? use routes
 const User = require("./routes/api/user");
 app.use('/api/user', User);
+const AddNote = require("./routes/api/addnote");
+app.use("/api/",AddNote);
 
 // app.get('/test', (req, res)=>{
 //   res.json({msg: "working"})
