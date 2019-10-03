@@ -37,9 +37,6 @@ app.use('/api/user', User);
 const AddNote = require("./routes/api/addnote");
 app.use("/api/",AddNote);
 
-// app.get('/test', (req, res)=>{
-//   res.json({msg: "working"})
-// })
 
 const port = process.env.PORT || 3001;
 
