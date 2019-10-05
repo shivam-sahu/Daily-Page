@@ -13,7 +13,7 @@ Add keys in "./config/credentials.js" and export them
 
 ```javascript
 module.exports = {
-  mongoURI: "mongodb://<dbuser>:<dbpassword>@ds127646.mlab.com:27646/articulus",
+  mongoURI: "mongodb://<dbuser>:<dbpassword>@ds113849.mlab.com:13849/daily-page",
   secretOrKey: "secretkey"
 };
 ```
