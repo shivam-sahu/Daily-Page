@@ -25,11 +25,11 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("connected to database..."))
   .catch(err => console.log(err));
 
-//? passport middleware
-// app.use(passport.initialize());
+// ? passport middleware
+app.use(passport.initialize());
 
 //? passport config
-// require('./config/passport')(passport);
+require('./config/passport')(passport);
 
 //? use routes
 const User = require("./routes/api/user");
