@@ -36,6 +36,8 @@ const User = require("./routes/api/user");
 app.use('/api/user', User);
 const Note = require("./routes/api/note");
 app.use("/api/",Note);
+const Contact = require("./routes/api/contact");
+app.use("/api/",Contact);
 
 
 const port = process.env.PORT || 3001;
