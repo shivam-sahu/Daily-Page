@@ -5,6 +5,16 @@ const User = require('../../models/User');
 const DiaryEntry = require('../../models/DiaryEntry');
 const passport = require('passport');
 
+// to get notes
+router.get("/note",passport.authenticate('jwt',{session:false}),(req,res) => {
+  const user = req.user.id;
+  DiaryEntry.find({user},(err,doc) =>{
+    if(err) res.status(400).json({"msg":"faliure"});
+    res.send({"msg":"success","arr":doc});
+  });
+
+});
+
 
 // to add a note
 router.post("/note",passport.authenticate('jwt',{session:false}),(req,res) => {
