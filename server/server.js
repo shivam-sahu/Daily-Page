@@ -34,8 +34,8 @@ require('./config/passport')(passport);
 //? use routes
 const User = require("./routes/api/user");
 app.use('/api/user', User);
-const AddNote = require("./routes/api/addnote");
-app.use("/api/",AddNote);
+const Note = require("./routes/api/note");
+app.use("/api/",Note);
 
 
 const port = process.env.PORT || 3001;
