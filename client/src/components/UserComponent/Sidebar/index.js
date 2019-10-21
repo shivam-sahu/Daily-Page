@@ -26,12 +26,12 @@ class Sidebar extends Component{
     }
   }
   render(){
-    return(<div>
-      <button onClick={() => this.props.addEditor(this.props.editorContent)}>
+    return(<div className="SideBar">
+      <button type="button" onClick={() => this.props.addEditor(this.props.editorContent)}>
         New Note
       </button>
       {
-        data?
+        data ?
         data.map((note,index)=>{
           return (<SiderbarItem text={note.text} key={index}/>)
         })

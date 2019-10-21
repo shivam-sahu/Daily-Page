@@ -16,7 +16,7 @@ class SidebarItem extends Component{
   render(){
     const { text, index, handleNoteClick} = this.props;
     // console.log(this.props);
-    return (<div onClick={() => handleNoteClick(text, index)}>
+    return (<div className="SideBarItem" onClick={() => handleNoteClick(text, index)}>
       {removeHTMLTags(text.substring(0, 30)) + '...'}
     </div>)
   }

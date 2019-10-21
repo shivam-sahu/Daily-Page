@@ -20,3 +20,37 @@
 .App-link {
   color: #09d3ac;
 }
+
+.Editor{
+  border: 0.1em solid black;
+  width : 68%;
+  display: inline-block;
+  margin: 0.1em;
+  min-height: 75vh;
+}
+
+.SideBar{
+  border: 0.1em solid black ;
+  display: inline-block;
+  float:left;
+  margin: 0.1em;
+  padding: 0.1em;
+  top: 0;
+  width: 30%;
+}
+
+.SideBar button {
+  margin: 0.2em;
+}
+
+.SideBarItem{
+  border: 0.1em solid black;
+  cursor: pointer;
+  margin: 0.2em;
+}
+
+#UserDashBoard{
+  display: block;
+  min-height: 78vh;
+}
+

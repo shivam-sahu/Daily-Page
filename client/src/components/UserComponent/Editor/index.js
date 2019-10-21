@@ -45,6 +45,7 @@ class Editor extends Component {
     const {editorContent} = this.props;
 
     return (
+      <div className="Editor">
       <ReactQuill
         theme="snow"
         modules={this.modules}
@@ -54,6 +55,7 @@ class Editor extends Component {
       >
         <div className="my-editing-area" />
       </ReactQuill>
+      </div>
     );
   }
 
