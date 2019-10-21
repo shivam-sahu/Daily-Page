@@ -26,11 +26,12 @@ export const loginUser = (userData,history) => dispatch => {
     .post('/api/user/login',userData)
     .then(res => {
 
-      const token = res.token;
+      const token = res.data.token;
+      // console.log(token);
       localStorage.setItem("jwtToken",token);
       history.push("/")
       return {
-        type : LOGGED_IN,
+        type : "LOGGED_IN",
         token
       }
       })
@@ -46,5 +47,4 @@ export const loginUser = (userData,history) => dispatch => {
     payload: userData
 
   };
-
 };

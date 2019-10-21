@@ -2,18 +2,25 @@ import {LOGGED_IN} from "../actions/types";
 
 
 const initialState = {
-  isAutheticated : false,
+  isAuthenticated : false,
+  token : null,
   user : {}
 };
 
 const authReducer = (state = initialState, action) => {
 
-  switch(action.type) {
+  const {type, token} = action;
+  switch(type) {
 
-    case LOGGED_IN:
-      return {...state, isAutheticated : true, token : action.token};
+    case ("LOGGED_IN"):
+    {
+      return { ...state, isAuthenticated : true, token};
+    }
     default : 
+    {
+      // console.log("HERERERERER");
       return state;
+    }
   }
 
 
