@@ -3,18 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux'; 
 
 import SiderbarItem from '../SidebarItem';
-import { addEditor} from '../../../actions/userActions';
-
-const data = [
-  { 
-    id:1,
-    text:"<div>By now, you already understand the basic mechanics of how GraphQL servers work under the hood - surprisingly simple right? That’s part of the beauty of GraphQL, that it actually only follows a few very simple rules. The strongly typed schema and the GraphQL engine that’s resolving the queries inside the server are taking away major pain points commonly dealt with in API development</div>"
-  },
-  { 
-    id:2,
-    text:"<div>another note</div>"
-  }
-]
+import { addEditor, doneChanges} from '../../../actions/userActions';
 
 class Sidebar extends Component{
   constructor(props){
@@ -25,15 +14,18 @@ class Sidebar extends Component{
       addingNote:false
     }
   }
+
   render(){
+    const data = this.props.notes;
     return(<div>
-      <button onClick={() => this.props.addEditor(this.props.editorContent)}>
+      <button onClick={() => this.props.addEditor(this.props.initialContent)}>
         New Note
       </button>
+      <button onClick={() => this.props.doneChanges(this.props.selectedNoteId, this.props.editorContent)}>Done</button>
       {
         data?
-        data.map((note,index)=>{
-          return (<SiderbarItem text={note.text} key={index}/>)
+        data.map((note)=>{
+          return (<SiderbarItem text={note.text} key={note._id} _id = {note._id}/>)
         })
         :null
       }
@@ -45,6 +37,7 @@ const mapDispatchToProps = dispatch=>{
 
   return (bindActionCreators({
     addEditor,
+    doneChanges
   },dispatch));
 }
 const mapStateToProps = (state)=>{
