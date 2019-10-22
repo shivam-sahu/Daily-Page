@@ -2,17 +2,22 @@ import {
   UPDATE_EDITOR_TEXT, 
   ADD_EDITOR, 
   HANDLE_NOTE_CLICK,
-  SET_INITIAL_STATE
+  GET_DATA,
+  DONE_CHANGES
 
 } from './types';
 import axios from 'axios';
-import debounce from '../helpers';
+// import debounce from '../helpers';
+import {debounce} from 'lodash';
+
+//? axios settings
+
+const token = localStorage.jwtToken;
+axios.defaults.headers.common = { 'Authorization': token }
 
 export const addEditor =(text)=>async dispatch=>{
-  const token = localStorage.jwtToken;
-  axios.defaults.headers.common = { 'Authorization': token }
   
-  const request = await axios.post("http://localhost:3001/api/note/",{text,token})
+  const request = await axios.post("http://localhost:3001/api/note/",{text})
   .then(res=>res.data)
   console.log(request);
   dispatch({
@@ -21,37 +26,53 @@ export const addEditor =(text)=>async dispatch=>{
   })
 }
 
+export const doneChanges =(noteId,text)=>async dispatch=>{
+  const note={
+    noteId,
+    text:"calu"
+  }
+  // console.log(text)
+  const request = await axios.put("http://localhost:3001/api/note/",note)
+  .then(res=>res.data)
+  .catch(err=>{console.log(err)})
+  console.log(request);
 
-export const setInitalState =()=>async dispatch =>{
-  const token = localStorage.jwtToken;
-  axios.defaults.headers.common = { 'Authorization': token };
+  dispatch({
+    type:DONE_CHANGES,
+    payload: request
+  })
+}
+
+
+export const getData =()=>async dispatch =>{
   const request = await axios.get("http://localhost:3001/api/note/")
   .then(res=>res.data)
   // console.log(request);
 
-  return({
-    type:SET_INITIAL_STATE,
-    payload:null
+  dispatch({
+    type: GET_DATA,
+    payload:request
   })
 }
 
-export const updateEditorText =(txt)=> async dispatch=>  {
-    // console.log(txt)
-    dispatch({
+export const updateEditorText =(note)=> async dispatch=>  {
+  const { _id: noteID, text} = note;
+  const payload={
+    noteID,
+    text
+  }
+   return({
     type: UPDATE_EDITOR_TEXT,
-    payload:{
-      txt
-    }
+    payload
   })
-  update();
+
 }
 
-const update = debounce(() => {
-  // this.props.noteUpdate(this.state.id, {
-  //   body: this.state.text
-  // })
+const  update =  debounce(async(note) => {
+  const request =await axios.patch("http://localhost:3001/api/note/",note)
   console.log("sending data to database");
-}, 5000);
+}, 2000);
+
 export const handleNoteClick = (text, index)=>{
   const payload = {
     text,

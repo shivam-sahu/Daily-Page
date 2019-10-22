@@ -1,5 +1,7 @@
 const initialState = {
-  editorContent: "<div contenteditable='false'> Write your notes here </div>",
+  initialContent: "<div contenteditable='false'> Write your notes here </div>",
+  editorContent: "",
+  notes:[],
   showEditor:false,
   selectedNoteId:null
 }
@@ -17,24 +19,31 @@ const userReducer = (state=initialState, action)=>{
       }
     }
     case ('HANDLE_NOTE_CLICK'):{
-      const { text, index } = payload;
+      const { text, _id } = payload;
       return {
         ...state,
         editorContent:text,
+        selectedNoteId:_id,
         showEditor:true
       }
     }
-    case ('SET_INITIAL_STATE'):{
-      return{...state}
+    case ('GET_DATA'):{
+      const {arr} = payload;
+      return{...state, notes:arr}
     }
     case ('UPDATE_EDITOR_TEXT'):{
-      const {txt} = payload;
+      const { text, noteID} = payload;
 
-      return { ...state, editorContent:txt }
+      return { ...state, 
+        editorContent: text, 
+        selectedNoteId: noteID
+      }
+    }
+    case ('DONE_CHANGES'):{
+      return{...state}
     }
 
     default: 
-      // console.log("CHALLA");  
       return state;
   }
 }

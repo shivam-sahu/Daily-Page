@@ -5,7 +5,8 @@ import {bindActionCreators} from 'redux';
 import Editor from './Editor';
 import Sidebar from './Sidebar';
 
-import {setInitalState} from '../../actions/userActions'; 
+import { getData} from '../../actions/userActions'; 
+
 
 class User extends Component{
 
@@ -14,8 +15,7 @@ class User extends Component{
   }
 
   componentDidMount(){
-    this.props.setInitalState(this.props.auth.user);
-    console.log(this.props.user.showEditor);
+    this.props.getData(this.props.auth.user);
   }
   
   render(){
@@ -29,7 +29,7 @@ class User extends Component{
 
 const mapDispatchToProps = dispatch=>{
   return(bindActionCreators({
-    setInitalState
+    getData
   },dispatch));
 }
 const mapStateToProps = (state)=>{
