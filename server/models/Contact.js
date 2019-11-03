@@ -15,7 +15,6 @@ const ContactSchema = new Schema({
     type: String
   }],
   email: { type: String, unique: true},
-
 });
 
 module.exports = Contact = mongoose.model("conatcts", ContactSchema);

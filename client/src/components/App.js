@@ -28,10 +28,11 @@ function App() {
           <Header />
           <div className="container-fluid">
           <Route exact path="/" component ={Home} />
-          <Route exact path="/" component ={Footer} />
+          {/* <Route exact path="/" component ={Footer} /> */}
           <Route exact path="/login" component ={Login} />
           <Route exact path="/register" component ={Register} />
           </div>
+          <Footer/>
         </div>
       </Router>
     </Provider>

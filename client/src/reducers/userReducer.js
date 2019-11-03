@@ -14,7 +14,7 @@ const userReducer = (state=initialState, action)=>{
       return {
         ...state,
         editorContent:text,
-        selectedNoteId:noteID,
+        selectedNoteId:noteID.toString(),
         showEditor:true
       }
     }
@@ -32,11 +32,12 @@ const userReducer = (state=initialState, action)=>{
       return{...state, notes:arr}
     }
     case ('UPDATE_EDITOR_TEXT'):{
-      const { text, noteID} = payload;
-
+      // const { text, noteID} = payload;
+      const {text}  = payload
+      // console.log(payload)
       return { ...state, 
-        editorContent: text, 
-        selectedNoteId: noteID
+        editorContent: payload, 
+        // selectedNoteId: noteID.toString()
       }
     }
     case ('DONE_CHANGES'):{

@@ -23,7 +23,7 @@ export const registerUser = (userData,history) => dispatch => {
 export const loginUser = (userData,history) => dispatch => {
 
   axios
-    .post('/api/user/login',userData)
+    .post('http://localhost:3001/api/user/login',userData)
     .then(res => {
 
       const token = res.data.token;

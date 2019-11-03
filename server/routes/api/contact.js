@@ -17,9 +17,6 @@ router.get("/contact",passport.authenticate('jwt',{session:false}),(req,res) => 
   
   });
   
-
-
-
 // to add a contact  (crash if not provided valid detalis)
 router.post(
   "/contact",

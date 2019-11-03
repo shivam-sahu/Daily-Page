@@ -17,15 +17,17 @@ class Sidebar extends Component{
 
   render(){
     const data = this.props.notes;
-    return(<div>
-      <button onClick={() => this.props.addEditor(this.props.initialContent)}>
+    console.log(this.props)
+    return (<div className="SideBar">
+      <button type='button' onClick={() => this.props.addEditor(this.props.initialContent)}>
         New Note
       </button>
       <button onClick={() => this.props.doneChanges(this.props.selectedNoteId, this.props.editorContent)}>Done</button>
       {
         data?
         data.map((note)=>{
-          return (<SiderbarItem text={note.text} key={note._id} _id = {note._id}/>)
+          // console.log(note._id.toString())
+          return (<SiderbarItem text={note.text} key={note._id} _id = {note._id.toString()}/>)
         })
         :null
       }

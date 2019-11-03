@@ -19,7 +19,7 @@ class User extends Component{
   }
   
   render(){
-  return(<div>
+    return (<div id="UserDashBoard">
     <Sidebar/>
     {
       this.props.user.showEditor ? <Editor />: null

@@ -7,7 +7,6 @@ import {
 
 } from './types';
 import axios from 'axios';
-// import debounce from '../helpers';
 import {debounce} from 'lodash';
 
 //? axios settings
@@ -26,17 +25,17 @@ export const addEditor =(text)=>async dispatch=>{
   })
 }
 
-export const doneChanges =(noteId,text)=>async dispatch=>{
-  const note={
-    noteId,
-    text:"calu"
-  }
-  // console.log(text)
-  const request = await axios.put("http://localhost:3001/api/note/",note)
+export const doneChanges =(noteID,text)=>async dispatch=>{
+  // const note={
+  //   noteId,
+  //   text
+  // }
+  // console.log(note.noteId)
+  
+  const request = await axios.put("http://localhost:3001/api/note/",{noteID, text})
   .then(res=>res.data)
   .catch(err=>{console.log(err)})
   console.log(request);
-
   dispatch({
     type:DONE_CHANGES,
     payload: request
@@ -55,15 +54,16 @@ export const getData =()=>async dispatch =>{
   })
 }
 
-export const updateEditorText =(note)=> async dispatch=>  {
-  const { _id: noteID, text} = note;
-  const payload={
-    noteID,
-    text
-  }
+export const updateEditorText =(note)=>{
+  // const { _id: noteID, text} = note;
+  // const payload={
+  //   noteID,
+  //   text
+  // }
+  const text= note;
    return({
     type: UPDATE_EDITOR_TEXT,
-    payload
+    payload:text
   })
 
 }
@@ -73,10 +73,10 @@ const  update =  debounce(async(note) => {
   console.log("sending data to database");
 }, 2000);
 
-export const handleNoteClick = (text, index)=>{
+export const handleNoteClick = (text, _id)=>{
   const payload = {
     text,
-    index
+    _id
   }
   return {
     type:HANDLE_NOTE_CLICK,
