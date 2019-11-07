@@ -1,13 +1,24 @@
 import React from 'react';
-import {
-  View,
-  Text,
-} from 'react-native';
+import {createStackNavigator} from 'react-navigation-stack';
+import {createAppContainer} from 'react-navigation';
 
-const App =()=>{
-  return(<View>
-    <Text>Main page of the app</Text>
-  </View>)
+import Compo from './src/components';
+import Login from './src/components/AuthComponents/Login';
+import UserComponent from './src/components/UserComponent';
+import Editor from './src/components/UserComponent/Editor'
+
+const App = createStackNavigator({
+  Compo:{screen:Compo},
+  Login:{screen:Login},
+  User:{screen:UserComponent},
+  Editor:{screen:Editor}
+},
+{
+  initialRouteName:'Login',
+  defaultNavigationOptions:{
+    title:'Daily-Page'
+  }
 }
+)
 
-export default App;
+export default createAppContainer(App);
