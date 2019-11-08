@@ -35,6 +35,7 @@ class Login extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    Keyboard.dismiss();
     const username = this.state.username;
     const password = this.state.password;
     const userData = { username, password };
@@ -52,8 +53,12 @@ class Login extends React.Component {
           <TextInput
             style={styles.textInput}
             placeholder='Username'
-            onBlur={Keyboard.dismiss}
+            // onBlur={Keyboard.dismiss}
             value={this.state.username}
+            autoCapitalize='none'
+            autoCompleteType='username'
+            autoFocus={true}
+            blurOnSubmit={true}
             onChangeText={(text) => {
               this.setState({ "username": text });
             }}
@@ -63,8 +68,10 @@ class Login extends React.Component {
           <TextInput
             style={styles.textInput}
             placeholder='Password'
-            onBlur={Keyboard.dismiss}
+            autoCompleteType='password'
+            // onBlur={Keyboard.dismiss}
             value={this.state.password}
+            blurOnSubmit={true}
             secureTextEntry={true}
             onChangeText={(text) => {
               this.setState({ "password": text });
