@@ -39,9 +39,6 @@ class Sidebar extends Component{
                     )
                 })
                 : null
-              
-              
-            
         }
         </View>
       </ScrollView>

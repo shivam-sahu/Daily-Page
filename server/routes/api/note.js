@@ -46,7 +46,7 @@ router.put("/note",passport.authenticate('jwt',{session:false}),(req,res) => {
   const noteID = req.body.noteID
   const text = req.body.text;
   
-  console.log(noteID, text);
+  // console.log(noteID, text);
   Notes.findOneAndUpdate({_id:noteID},{text,"date":Date.now()},{new:true}).then(doc => {
     
     res.status(200).json({"msg":"success"});

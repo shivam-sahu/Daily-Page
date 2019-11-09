@@ -3,7 +3,12 @@ import {
   ADD_EDITOR, 
   HANDLE_NOTE_CLICK,
   GET_DATA,
-  DONE_CHANGES
+  DONE_CHANGES,
+  GET_CONTACTS,
+  ADD_CONTACT,
+  SAVE_CONTACT,
+  HANDLE_CONTACT_CLICK,
+  UPDATE_CONTACT
 
 } from './types';
 import axios from '../utils/axios';
@@ -25,12 +30,62 @@ const getToken = async () => {
     throw (e)
   }
 }
-// const token = getToken();
-// console.log(token)
-// axios.defaults.headers.common = { 'Authorization': token }
-console.log('user actions');
 getToken();
 
+//? contact actions 
+
+export const addContact = () => {
+  return ({
+    type: ADD_CONTACT,
+    payload: null
+  })
+}
+
+export const getContacts=()=>async dispatch=>{
+  const request = await axios.get("/api/contact/")
+  .then(res=>res.data)
+  .catch(err=>{console.log("cannot fetch contacts")})
+  // console.log(request)
+  dispatch({
+    type:GET_CONTACTS,
+    payload:request
+  })
+}
+
+export const handleContactClick=(contact)=>{
+  return {
+    type:HANDLE_CONTACT_CLICK,
+    payload: contact
+  }
+}
+
+export const saveContacts=(contacts)=>async dispatch=>{
+  const request = await axios.post("/api/contact",{...contacts})
+  .then(res=>res.data)
+  .catch(err=>{console.log("something went wrong while saving contact")})
+
+  // console.log(request)
+
+  dispatch({
+    type: SAVE_CONTACT,
+    payload:null
+  })
+}
+
+export const updateContact = (_id,data)=>async dispatch=>{
+  console.log(_id);
+  const contactID = _id;
+  const request = await axios.patch("/api/contact", { contactID,...data})
+  .then(res=>res.data)
+  .catch(err=>{console.log("something went wrong while updataing contacts")})
+  console.log(request)
+  dispatch({
+    type:UPDATE_CONTACT,
+    payload:request
+  })
+}
+
+//? Editor actions
 export const addEditor =(text)=>async dispatch=>{
   
   const request = await axios.post("/api/note/",{text})
@@ -66,12 +121,18 @@ export const getData =()=>async dispatch =>{
   })
 }
 
+export const handleNoteClick = (text, _id) => {
+  const payload = {
+    text,
+    _id
+  }
+  return {
+    type: HANDLE_NOTE_CLICK,
+    payload
+  }
+}
+
 export const updateEditorText =(note)=>{
-  // const { _id: noteID, text} = note;
-  // const payload={
-  //   noteID,
-  //   text
-  // }
   const text= note;
    return({
     type: UPDATE_EDITOR_TEXT,
@@ -80,18 +141,6 @@ export const updateEditorText =(note)=>{
 
 }
 
-const  update =  debounce(async(note) => {
-  const request =await axios.patch("/api/note/",note)
-  console.log("sending data to database");
-}, 2000);
 
-export const handleNoteClick = (text, _id)=>{
-  const payload = {
-    text,
-    _id
-  }
-  return {
-    type:HANDLE_NOTE_CLICK,
-    payload
-  }
-}
+
+//? Remainder actions

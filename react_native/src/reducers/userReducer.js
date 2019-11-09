@@ -9,12 +9,63 @@ const initialState = {
   editorContent: "",
   notes:[],
   showEditor:false,
-  selectedNoteId:null
+  selectedNoteId:null,
+  contacts:[],
+  isContactEditing:false,
+  selectedContactId:null, 
+  selectedContact:null 
 }
 const userReducer = (state=initialState, action)=>{
   const {payload, type} = action;
   switch(type){
+    
+    //? Contact Reducers
+    case ('ADD_CONTACT'):{
+      return{
+        ...state,
+        isContactEditing:true,
+        selectedContactId:null,
+        selectedContact:null
+      }
+    }
 
+    case ('GET_CONTACTS'):{
+      const {arr} = payload;
+      return {...state,contacts:arr}
+    }
+
+    case ('HANDLE_CONTACT_CLICK'):{
+      const {_id:selectedContactId} =payload
+      return {...state,
+        selectedContactId,
+        isContactEditing:true,
+        selectedContact:payload
+      }
+    }
+
+    case ('SAVE_CONTACT'):{
+      return{
+        ...state,
+        isContactEditing:false,
+        selectedNoteId:''
+      }
+    }
+
+    case ('UPDATE_CONTACT'):{
+      // console.log("state->",state.contacts)
+      const { contactID:id} = payload;
+      const oldContacts = state.contacts;
+      const filteredContacts = oldContacts.filter(({_id})=> _id !== id)
+      console.log(filteredContacts)
+      return {...state,
+        isContactEditing:false,
+        selectedContact:null,
+        selectedContactId:null,
+        contacts: [...filteredContacts,payload]
+      }
+    }
+    
+    //? Editor Reducers
     case ('ADD_EDITOR'):{
       const { text, noteID} = payload;
       return {

@@ -8,16 +8,18 @@ import UserComponent from './src/components/UserComponent';
 import Editor from './src/components/UserComponent/Editor'
 
 import ContactInput from './src/components/UserComponent/Contacts/ContactInput';
+import Contact from './src/components/UserComponent/Contacts'
 
 const App = createStackNavigator({
   Compo:{screen:Compo},
   Login:{screen:Login},
   User:{screen:UserComponent},
   Editor:{screen:Editor},
-  ContactInput: { screen: ContactInput}
+  ContactInput: { screen: ContactInput},
+  Contact:{screen:Contact}
 },
 {
-  initialRouteName:'ContactInput',
+  initialRouteName:'Login',
   defaultNavigationOptions:{
     title:'Daily-Page'
   }
