@@ -41,7 +41,7 @@ class Login extends React.Component {
     const userData = { username, password };
     // console.log(userData);
     this.props.loginUser(userData)
-      .then(() => { this.props.navigation.navigate('Contact');})
+      .then(() => { this.props.navigation.navigate('User');})
     
   }
 

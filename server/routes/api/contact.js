@@ -50,10 +50,10 @@ router.delete("/contact",passport.authenticate('jwt',{session:false}),(req,res) 
 router.patch("/contact",passport.authenticate('jwt',{session:false}),(req,res) => {
 
     const contactID = req.body.contactID
-    res.status(200).json(req.body);
+    // res.status(200).json(req.body);
 
     Contact.findOneAndUpdate({_id:contactID},req.body, {new:true}).then(doc => { 
-      res.status(200).json({"msg":"success"});
+      res.status(200).json({...req.body,"msg":"success"});
     }).catch(err => {
       res.status(200).json({"msg":"faliure"});
     })
