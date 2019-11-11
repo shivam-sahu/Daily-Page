@@ -38,6 +38,8 @@ const Note = require("./routes/api/note");
 app.use("/api/",Note);
 const Contact = require("./routes/api/contact");
 app.use("/api/",Contact);
+const Reminder = require("./routes/api/reminder");
+app.use("/api/",Reminder);
 
 
 const port = process.env.PORT || 3001;
