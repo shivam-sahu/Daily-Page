@@ -53,7 +53,7 @@ const userReducer = (state=initialState, action)=>{
 
     case ('UPDATE_CONTACT'):{
       // console.log("state->",state.contacts)
-      const { contactID:id} = payload;
+      const { _id:id,data,request} = payload;
       const oldContacts = state.contacts;
       const filteredContacts = oldContacts.filter(({_id})=> _id !== id)
       console.log(filteredContacts)
@@ -61,7 +61,7 @@ const userReducer = (state=initialState, action)=>{
         isContactEditing:false,
         selectedContact:null,
         selectedContactId:null,
-        contacts: [...filteredContacts,payload]
+        contacts: [...filteredContacts,data]
       }
     }
     

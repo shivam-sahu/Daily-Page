@@ -9,8 +9,7 @@ import { addContact, handleContactClick} from '../../../actions/userActions';
 class ContactList extends Component{
   constructor(props){
     super(props);
-    this.state={
-    }
+    
   }
   render(){
     const { props: { contacts, isContactEditing, selectedContactId, addContact, handleContactClick}} = this

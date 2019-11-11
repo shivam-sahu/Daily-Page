@@ -43,7 +43,7 @@ router.delete("/note",passport.authenticate('jwt',{session:false}),(req,res) => 
 // to update 
 router.put("/note",passport.authenticate('jwt',{session:false}),(req,res) => {
 
-  const noteID = req.body.noteID
+  const noteID = req.body.noteID;
   const text = req.body.text;
   
   // console.log(noteID, text);

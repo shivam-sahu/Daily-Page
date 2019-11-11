@@ -60,6 +60,7 @@ export const handleContactClick=(contact)=>{
 }
 
 export const saveContacts=(contacts)=>async dispatch=>{
+  console.log(contacts);
   const request = await axios.post("/api/contact",{...contacts})
   .then(res=>res.data)
   .catch(err=>{console.log("something went wrong while saving contact")})
@@ -72,16 +73,21 @@ export const saveContacts=(contacts)=>async dispatch=>{
   })
 }
 
-export const updateContact = (_id,data)=>async dispatch=>{
-  console.log(_id);
-  const contactID = _id;
-  const request = await axios.patch("/api/contact", { contactID,...data})
+export const updateContact = (contacts)=>async dispatch=>{
+  // console.log(_id);
+  // const contactID = _id;
+  // console.log(contacts);
+  const request = await axios.put("/api/contact", {...contacts})
   .then(res=>res.data)
   .catch(err=>{console.log("something went wrong while updataing contacts")})
   console.log(request)
   dispatch({
     type:UPDATE_CONTACT,
-    payload:request
+    payload:{
+      request,
+      data:contacts,
+      _id: contacts.contactID
+    }
   })
 }
 

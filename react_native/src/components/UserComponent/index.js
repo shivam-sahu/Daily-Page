@@ -25,7 +25,7 @@ class User extends Component{
       <View>
       {/* <ScrollView> */}
 
-      <Text>User Component!...</Text>
+      {/* <Text>User Component!...</Text> */}
     <Sidebar/>
     {/* {
       this.props.user.showEditor ? <Editor />: null

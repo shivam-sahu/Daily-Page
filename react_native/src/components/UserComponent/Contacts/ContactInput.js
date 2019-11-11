@@ -26,7 +26,7 @@ class  ContactInput extends Component {
     null
   }
   render(){
-    // console.log(data);
+    // console.log(this.props);
     return(
     <ScrollView>
       <View>
@@ -93,12 +93,13 @@ class  ContactInput extends Component {
     const {name,email,firstMobile,secondMobile} = this.state;
     const mobileNos = [firstMobile,secondMobile];
     const contacts={
+      contactID:selectedContactId,
       name,
       email,
       mobile:mobileNos
     }
     selectedContactId ? 
-    this.props.updateContact(selectedContactId,contacts)
+    this.props.updateContact(contacts)
     :
     this.props.saveContacts(contacts)
     

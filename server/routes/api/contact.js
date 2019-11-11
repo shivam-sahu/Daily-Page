@@ -47,18 +47,18 @@ router.delete("/contact",passport.authenticate('jwt',{session:false}),(req,res) 
   });
 
 // to update  a contact
-router.patch("/contact",passport.authenticate('jwt',{session:false}),(req,res) => {
+router.put("/contact",passport.authenticate('jwt',{session:false}),(req,res) => {
 
-    const contactID = req.body.contactID
+    const contactID = req.body.contactID;
     // res.status(200).json(req.body);
+    const update = req.body;
+    // console.log()
 
-    Contact.findOneAndUpdate({_id:contactID},req.body, {new:true}).then(doc => { 
-      res.status(200).json({...req.body,"msg":"success"});
+  Contact.findOneAndUpdate({ _id: contactID },  update, {new:true}).then(doc => { 
+      res.status(200).json({"msg":"success"});
     }).catch(err => {
       res.status(200).json({"msg":"faliure"});
     })
-  
-  
   });
 
 module.exports = router;

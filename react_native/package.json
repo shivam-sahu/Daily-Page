@@ -16,7 +16,11 @@
     "react": "16.9.0",
     "react-ionicons": "^3.0.1",
     "react-native": "0.61.3",
+<<<<<<< HEAD
     "react-native-calendars": "^1.212.0",
+=======
+    "react-native-elements": "^1.2.7",
+>>>>>>> added header template for contact and notes component
     "react-native-gesture-handler": "^1.5.0",
     "react-native-paper": "^3.2.1",
     "react-native-pell-rich-editor": "^1.0.4",
