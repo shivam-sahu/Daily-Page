@@ -10,7 +10,7 @@ router.get("/note",passport.authenticate('jwt',{session:false}),(req,res) => {
   const user = req.user.id;
   Notes.find({user},(err,doc) =>{
     if(err) res.status(400).json({"msg":"faliure"});
-    res.send({"msg":"success","arr":doc});
+    else res.send({"msg":"success","arr":doc});
   });
 });
 
@@ -22,9 +22,9 @@ router.post("/note",passport.authenticate('jwt',{session:false}),(req,res) => {
   const newEntry = new Notes({text,user});
 
   newEntry.save((err,doc) => {
-    if(err) res.status(400).json({"msg":"faliure"});
+    // if(err) res.status(400).json({"msg":"faliure"});
 
-    res.status(200).json({"msg":"success","noteID":newEntry.id,"text":newEntry.text});
+    res.status(200).json({"msg":"success","noteID":doc.id,"text":doc.text});
   });
 });
 
@@ -34,7 +34,7 @@ router.delete("/note",passport.authenticate('jwt',{session:false}),(req,res) => 
   Notes.remove({_id:req.body.noteID}, (err) => {
     if(err) res.status(400).json({"msg":"faliure"});
 
-    res.status(200).json({"msg":"success"});
+    else res.status(200).json({"msg":"success"});
     
   });
 
