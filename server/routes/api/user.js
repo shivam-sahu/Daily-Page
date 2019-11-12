@@ -9,7 +9,6 @@ const User = require('../../models/User');
 
 //!test
 router.get('/test', (req, res) => {
-  console.log("ksldjfasfj ")
   res.json({
     msg: "wo this works."
   })
