@@ -13,7 +13,12 @@ const initialState = {
   contacts:[],
   isContactEditing:false,
   selectedContactId:null, 
-  selectedContact:null 
+  selectedContact:null,
+  reminders:[],
+  isReminderEditing:false,
+  selectedReminderId:null,
+  selectedReminderId:null,
+  seletedDate:null 
 }
 const userReducer = (state=initialState, action)=>{
   const {payload, type} = action;
@@ -100,6 +105,12 @@ const userReducer = (state=initialState, action)=>{
     }
     case ('DONE_CHANGES'):{
       return{...state}
+    }
+    //? remider reducers
+
+    case ('HANDLE_DAY_PRESS'):{
+      const {day:{timestamp}} = payload;
+      return { ...state, seletedDate:timestamp}
     }
 
     default: 

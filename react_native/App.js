@@ -13,6 +13,7 @@ import ContactInput from './src/components/UserComponent/Contacts/ContactInput';
 import Contact from './src/components/UserComponent/Contacts';
 
 import ReminderCalendar from './src/components/UserComponent/Calendar/index';
+import ReminderList from './src/components/UserComponent/Calendar/reminderlist';
 
 import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -38,8 +39,19 @@ const App = createBottomTabNavigator(
   },
   Editor:{screen:Editor},
   ContactInput: { screen: ContactInput},
-  Contact:{screen:Contact},
-  ReminderCalendar:{screen:ReminderCalendar}
+  ReminderList:{screen:ReminderList},
+  Contact:{screen:Contact,
+    navigationOptions: {
+      tabBarLabel: 'Contacts',
+      tabBarIcon: ({ tintColor }) => (<Icon name="ios-contact" color={tintColor} size={25} />)
+    }
+  },
+  ReminderCalendar:{screen:ReminderCalendar,
+    navigationOptions: {
+      tabBarLabel: 'Reminders',
+      tabBarIcon: ({ tintColor }) => (<Icon name="ios-calendar" color={tintColor} size={25} />)
+    }
+  }
 },
 {
   initialRouteName:'ReminderCalendar',

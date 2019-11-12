@@ -17,9 +17,11 @@ router.get("/reminder",passport.authenticate('jwt',{session:false}),(req,res) =>
     else {
       
     let arr = [];
-    let reqDate = new Date(req.query.date);
-    console.log("log",doc);
-    arr = doc.filter((x) => true);
+    // let reqDate = new Date(req.body.timestamp);
+    let reqDate = req.body.timestamp;
+    console.log(req);
+     // console.log("log",doc);
+    arr = doc.filter((item) => item.date === reqDate);
     res.status(200).json({"msg":"success",arr});  
     }  
   });
@@ -30,7 +32,9 @@ router.get("/reminder",passport.authenticate('jwt',{session:false}),(req,res) =>
 router.post("/reminder",passport.authenticate('jwt',{session:false}),(req,res) => {
   const text = req.body.text;
   const user = req.user.id;
-  const reqDate = new Date(req.body.date); // req has date in ISO string format
+  // console.log(user, "    ", text)
+  // const reqDate = new Date(req.body.date); // req has date in ISO string format
+  const reqDate = req.body.timestamp;
   const newEntry = new Reminder({text,user,"date" : reqDate});
 
   newEntry.save((err,doc) => {

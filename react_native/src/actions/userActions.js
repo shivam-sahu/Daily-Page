@@ -8,7 +8,15 @@ import {
   ADD_CONTACT,
   SAVE_CONTACT,
   HANDLE_CONTACT_CLICK,
-  UPDATE_CONTACT
+  UPDATE_CONTACT,
+  ADD_REMINDER,
+  SAVE_REMINDER,
+  GET_REMINDER,
+  HANDLE_DAY_PRESS,
+  HANDLE_REMINDER_CLICK,
+  UPDATE_REMINDER
+
+
 
 } from './types';
 import axios from '../utils/axios';
@@ -150,3 +158,70 @@ export const updateEditorText =(note)=>{
 
 
 //? Remainder actions
+
+export const addReminder = (text) => async dispatch => {
+
+  const request = await axios.post("/api/note/", { text })
+    .then(res => res.data)
+  // console.log(request);
+  dispatch({
+    type: ADD_REMINDER,
+    payload: request
+  })
+}
+
+export const saveReminder = (noteID, text) => async dispatch => {
+  const request = await axios.put("/api/note/", { noteID, text })
+    .then(res => res.data)
+    .catch(err => { console.log(err) })
+  // console.log(request);
+  dispatch({
+    type: SAVE_REMINDER,
+    payload: request
+  })
+}
+
+
+export const getReminder = () => async dispatch => {
+  const request = await axios.get("/api/note/")
+    .then(res => res.data)
+    .catch(err => { console.log('something went wrong') })
+  // console.log(request);
+
+  dispatch({
+    type: GET_REMINDER,
+    payload: request
+  })
+}
+
+export const handleDayPress = (day)=>async dispatch=>{
+  // const {timestamp} = day;
+  const request = await axios.get('/api/reminder',{prams:{day}})
+  .then(res=>res.data)
+  .catch(err=>{console.log('cant fetch reminders')})
+  console.log(request, "timestamp=",timestamp);
+  dispatch ({
+    type: HANDLE_DAY_PRESS,
+    payload:{day,request}
+  })
+}
+
+export const handleReminderClick = (text, _id) => {
+  const payload = {
+    text,
+    _id
+  }
+  return {
+    type: HANDLE_REMINDER_CLICK,
+    payload
+  }
+}
+
+export const updateReminder = (note) => {
+  const text = note;
+  return ({
+    type: UPDATE_REMINDER,
+    payload: text
+  })
+
+}

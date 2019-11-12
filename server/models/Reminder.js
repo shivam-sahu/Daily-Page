@@ -1,7 +1,7 @@
 const moongoose = require("mongoose");
 const Schema = moongoose.Schema;
 
-let d = new Date();
+// let d = new Date();
 
 const ReminderSchema = new Schema({
   text : {
@@ -13,7 +13,7 @@ const ReminderSchema = new Schema({
     ref : "users"
   },
   date : {
-    type: Date
+    type: String
   }
 
 

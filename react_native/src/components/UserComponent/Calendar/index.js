@@ -1,8 +1,11 @@
 import React,{Component} from 'react';
 import {Keyboard,TouchableOpacity, Text ,ScrollView, StyleSheet, View, TextInput} from 'react-native';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-export default class ReminderCalendar extends Component {
+import {handleDayPress} from '../../../actions/userActions';
+class ReminderCalendar extends Component {
   constructor(props) {
     super(props);
   }
@@ -17,13 +20,13 @@ export default class ReminderCalendar extends Component {
           // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
           maxDate={'2050-01-01'}
           // Handler which gets executed on day press. Default = undefined
-          onDayPress={(day) => {console.log('selected day', day)}}
+          onDayPress={(day) => { this.props.handleDayPress(day)}}
           // Handler which gets executed on day long press. Default = undefined
-          onDayLongPress={(day) => {console.log('selected day', day)}}
+          // onDayLongPress={(day) => {console.log('selected day', day)}}
           // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
           monthFormat={'yyyy MM'}
           // Handler which gets executed when visible month changes in calendar. Default = undefined
-          onMonthChange={(month) => {console.log('month changed', month)}}
+          // onMonthChange={(month) => {console.log('month changed', month)}}
           // Hide month navigation arrows. Default = false
           // hideArrows={true}
           // Replace default arrows with custom ones (direction can be 'left' or 'right')
@@ -50,3 +53,14 @@ export default class ReminderCalendar extends Component {
     );
   }
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return (bindActionCreators({
+    handleDayPress,
+  }, dispatch))
+}
+const mapStateToProps = (state) => {
+  const { user } = state;
+  return user;
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ReminderCalendar);
