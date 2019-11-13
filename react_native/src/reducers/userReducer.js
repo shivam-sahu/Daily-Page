@@ -17,7 +17,7 @@ const initialState = {
   reminders:[],
   isReminderEditing:false,
   selectedReminderId:null,
-  selectedReminderId:null,
+  selectedReminder:null,
   seletedDate:null 
 }
 const userReducer = (state=initialState, action)=>{
@@ -109,8 +109,12 @@ const userReducer = (state=initialState, action)=>{
     //? remider reducers
 
     case ('HANDLE_DAY_PRESS'):{
-      const {day:{timestamp}} = payload;
-      return { ...state, seletedDate:timestamp}
+      const {day:{timestamp},arr} = payload;
+      return { 
+        ...state, 
+        seletedDate:timestamp,
+        reminders:arr
+      }
     }
 
     default: 

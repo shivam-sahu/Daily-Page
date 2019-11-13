@@ -4,21 +4,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import ReminderInput from './reminderInput';
+import ReminderItem from './reminderItem';
 import {addReminder,handleReminderClick} from '../../../actions/userActions';
 
-data=[
-  {text:'1st reminder',
-  user:'shivam',
-  date:'somei'
-}
-
-]
 class ReminderList extends Component{
   constructor(props){
     super(props);
-    this.state={
-  
-    }
+
   }
   render(){
     const { props: { reminders, isReminderEditing, selectedReminderId, addReminder, handleReminderClick} } = this
@@ -37,14 +29,13 @@ class ReminderList extends Component{
               reminders.length ?
                 reminders.map((reminder) =>
                   <TouchableOpacity key={reminder._id} onPress={() => { handleReminderClick(reminder) }}>
-                    <ContactItem reminder={reminder} />
+                    <ReminderItem reminder={reminder} />
                   </TouchableOpacity>
                 )
                 :
                 <Text>No reminders for this date</Text>
             }
           </View>
-
       }
     </ScrollView>)
   }

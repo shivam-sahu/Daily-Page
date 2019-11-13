@@ -1,8 +1,8 @@
-import React from 'react';
+import React,{Component} from 'react';
 import {createStackNavigator} from 'react-navigation-stack';
 import { createAppContainer} from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-// import { createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
+import NavigationService from './NavigationService';
  
 import Compo from './src/components';
 import Login from './src/components/AuthComponents/Login';
@@ -17,7 +17,8 @@ import ReminderList from './src/components/UserComponent/Calendar/reminderlist';
 
 import Icon from 'react-native-vector-icons/Ionicons'
 
-const App = createBottomTabNavigator(
+
+const TopLevelNavigator = createBottomTabNavigator(
   {
     Compo:{screen:Compo,
     navigationOptions: {
@@ -62,4 +63,16 @@ const App = createBottomTabNavigator(
 }
 )
 
-export default createAppContainer(App);
+const AppContainer = createAppContainer(TopLevelNavigator);
+
+
+class App extends Component{
+  render(){
+    return(<AppContainer
+      ref={navigatorRef => {
+        NavigationService.setTopLevelNavigator(navigatorRef);
+      }}
+    />)
+  }
+}
+export default App;

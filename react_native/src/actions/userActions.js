@@ -22,6 +22,7 @@ import {
 import axios from '../utils/axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import {debounce} from 'lodash';
+import NavigationService from '../../NavigationService';
 
 //? axios settings
 
@@ -115,7 +116,7 @@ export const doneChanges =(noteID,text)=>async dispatch=>{
   const request = await axios.put("/api/note/",{noteID, text})
   .then(res=>res.data)
   .catch(err=>{console.log(err)})
-  // console.log(request);
+  NavigationService.navigate('User');
   dispatch({
     type:DONE_CHANGES,
     payload: request
@@ -195,14 +196,16 @@ export const getReminder = () => async dispatch => {
 }
 
 export const handleDayPress = (day)=>async dispatch=>{
-  // const {timestamp} = day;
-  const request = await axios.get('/api/reminder',{prams:{day}})
+  const {timestamp} = day;
+  // console.log(day)
+  const request = await axios.get('/api/reminder',{params:{timestamp}})
   .then(res=>res.data)
   .catch(err=>{console.log('cant fetch reminders')})
-  console.log(request, "timestamp=",timestamp);
+  // console.log(request);
+  // NavigationService.navigate('ReminderList');
   dispatch ({
     type: HANDLE_DAY_PRESS,
-    payload:{day,request}
+    payload:{day,arr:request.arr}
   })
 }
 
