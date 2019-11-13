@@ -9,7 +9,7 @@ react server is on port 3000 while node server is on port 3001 (localhost)
 
 ## Keys
 
-Add keys in "./config/credentials.js" and export them
+Add keys in "./server/config/credentials.js" and export them
 
 ```javascript
 module.exports = {
