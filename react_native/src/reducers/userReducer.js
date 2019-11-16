@@ -19,7 +19,8 @@ const initialState = {
   isDayClicked:false,
   selectedReminderId:null,
   selectedReminder:null,
-  seletedDate:null 
+  seletedDate:null,
+  selectedFullTime:null 
 }
 const userReducer = (state=initialState, action)=>{
   const {payload, type} = action;

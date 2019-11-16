@@ -50,7 +50,8 @@ const TopLevelNavigator = createBottomTabNavigator(
     navigationOptions: {
       tabBarLabel: 'Reminders',
       tabBarIcon: ({ tintColor }) => (<Icon name="ios-calendar" color={tintColor} size={25} />)
-    }
+    },
+    
   }
 },
 {
