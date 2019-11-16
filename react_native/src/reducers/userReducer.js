@@ -34,7 +34,20 @@ const userReducer = (state=initialState, action)=>{
         selectedContact:null
       }
     }
-
+    case ('CLOSE_CONTACT'):{
+      return{...state,
+        isContactEditing: false,
+        selectedContactId: null,
+        selectedContact: null
+      }
+    }
+    case (' DELETE_CONTACT'):{
+      return{...state,
+        isContactEditing: false,
+        selectedContactId: null,
+        selectedContact: null
+      }
+    }
     case ('GET_CONTACTS'):{
       const {arr} = payload;
       return {...state,contacts:arr}
@@ -52,8 +65,9 @@ const userReducer = (state=initialState, action)=>{
     case ('SAVE_CONTACT'):{
       return{
         ...state,
-        isContactEditing:false,
-        selectedNoteId:''
+        isContactEditing: false,
+        selectedContactId: null,
+        selectedContact: null
       }
     }
 

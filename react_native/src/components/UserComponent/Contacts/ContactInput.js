@@ -2,8 +2,8 @@ import React,{Component} from 'react'
 import {Keyboard,TouchableOpacity, Text ,ScrollView, StyleSheet, View, TextInput} from 'react-native';
 import { connect } from 'react-redux';
 import {bindActionCreators } from 'redux';
-import { saveContacts, updateContact} from '../../../actions/userActions';
-
+import { saveContacts, updateContact, deleteContact, closeContact} from '../../../actions/userActions';
+import Icon from 'react-native-vector-icons/Ionicons';
 class  ContactInput extends Component {
   constructor(props){
     super(props);
@@ -30,12 +30,36 @@ class  ContactInput extends Component {
     return(
     <ScrollView>
       <View>
-        <TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => this.props.closeContact()}
+          >
+            <Icon name="ios-close" size={45} />
+          </TouchableOpacity>
+          {
+            this.props.selectedContactId ?
+              <TouchableOpacity
+                onPress={() => this.props.deleteContact(this.props.selectedContactId)}
+              >
+                <Icon name="ios-trash" size={30} />
+              </TouchableOpacity> :
+              null
+          }
+
+
+          <TouchableOpacity
+            onPress={() => this.onSave()}>
+            <Icon name="ios-checkmark" size={45} />
+          </TouchableOpacity>
+
+
+
+        {/* <TouchableOpacity>
           <Text>Disgard</Text>
-        </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.onSave()}>
+        </TouchableOpacity> */}
+          {/* <TouchableOpacity onPress={() => this.onSave()}>
             <Text>Save</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     
       <View>
@@ -111,6 +135,8 @@ class  ContactInput extends Component {
 
 const mapDispatchToProps = (dispatch)=>{
   return(bindActionCreators({
+    deleteContact, 
+    closeContact,
     saveContacts,
     updateContact
   },dispatch)

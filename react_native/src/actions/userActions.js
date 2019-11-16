@@ -6,6 +6,8 @@ import {
   DONE_CHANGES,
   GET_CONTACTS,
   ADD_CONTACT,
+  CLOSE_CONTACT,
+  DELETE_CONTACT,
   SAVE_CONTACT,
   HANDLE_CONTACT_CLICK,
   UPDATE_CONTACT,
@@ -17,9 +19,6 @@ import {
   HANDLE_DAY_PRESS,
   HANDLE_REMINDER_CLICK,
   UPDATE_REMINDER
-
-
-
 } from './types';
 import axios from '../utils/axios';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -52,11 +51,28 @@ export const addContact = () => {
   })
 }
 
+export const closeContact = ()=>{
+  return{
+    type:CLOSE_CONTACT,
+    payload:null
+  }
+}
+
+export const deleteContact = (contactID)=>async dispatch=>{
+  const request = await axios.delete('/api/contact/', { data: { contactID } })
+    .then(res => res.data)
+    .catch(e => console.log("note not deleted!"));
+  dispatch({
+    type:DELETE_CONTACT,
+    payload: request
+  })
+}
+
 export const getContacts=()=>async dispatch=>{
   const request = await axios.get("/api/contact/")
   .then(res=>res.data)
   .catch(err=>{console.log("cannot fetch contacts")})
-  // console.log(request)
+
   dispatch({
     type:GET_CONTACTS,
     payload:request
@@ -71,12 +87,9 @@ export const handleContactClick=(contact)=>{
 }
 
 export const saveContacts=(contacts)=>async dispatch=>{
-  console.log(contacts);
   const request = await axios.post("/api/contact",{...contacts})
   .then(res=>res.data)
   .catch(err=>{console.log("something went wrong while saving contact")})
-
-  // console.log(request)
 
   dispatch({
     type: SAVE_CONTACT,

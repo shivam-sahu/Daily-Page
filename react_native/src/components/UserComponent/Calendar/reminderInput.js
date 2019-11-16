@@ -30,21 +30,8 @@ componentDidMount(){
   render(){
     return (
       <View>
-        <TextInput
-          value={this.state.text}
-          onChangeText={e => {
-            this.handleTextChange(e);
-          }}
-          underlineColorAndroid="#428AF8"
-          placeholder="Add Reminder"
-          multiline={true}
-          autoFocus={true}
-        />
         <TouchableOpacity
-          onPress={() => this.props.closeReminder(
-            this.state.text,
-            this.props.seletedDate
-          )}
+          onPress={() => this.props.closeReminder()}
         >
         <Icon name="ios-close" size={45} />
         </TouchableOpacity>
@@ -67,6 +54,17 @@ componentDidMount(){
         >
           <Icon name="ios-checkmark" size={45} />
         </TouchableOpacity>
+        
+        <TextInput
+          value={this.state.text}
+          onChangeText={e => {
+            this.handleTextChange(e);
+          }}
+          underlineColorAndroid="#428AF8"
+          placeholder="Add Reminder"
+          multiline={true}
+          autoFocus={true}
+        />
       </View>
     );
   }
