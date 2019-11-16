@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import {createStackNavigator} from 'react-navigation-stack';
 import { createAppContainer} from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import NavigationService from './NavigationService';
@@ -62,6 +61,7 @@ const TopLevelNavigator = createBottomTabNavigator(
   }
 }
 )
+
 
 const AppContainer = createAppContainer(TopLevelNavigator);
 

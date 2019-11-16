@@ -19,7 +19,7 @@ router.get("/reminder",passport.authenticate('jwt',{session:false}),(req,res) =>
     let arr = [];
     // let reqDate = new Date(req.body.timestamp);
     let reqDate = req.query.timestamp;
-    // console.log(req.query);
+    console.log(req.query);
      // console.log("log",doc);
     arr = doc.filter((item) => item.date === reqDate);
     res.status(200).json({"msg":"success",arr});  
@@ -46,7 +46,9 @@ router.post("/reminder",passport.authenticate('jwt',{session:false}),(req,res) =
 // to delete a note
 router.delete("/reminder",passport.authenticate('jwt',{session:false}),(req,res) => {
   const id = req.body.reminderID;
-  Reminder.remove({_id:req.body.reminderID}, (err) => {
+  // console.log(req.body)
+
+  Reminder.deleteOne({_id:req.body.reminderID}, (err) => {
     if(err) res.status(400).json({"msg":"faliure"})
     else res.status(200).json({"msg":"success"});
     

@@ -1938,6 +1938,11 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-native-keyboard-accessory@^0.1.10:
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-accessory/-/react-native-keyboard-accessory-0.1.10.tgz#230dd6a4f8f49a10ebada1a41fdc4045296f5111"
+  integrity sha512-NxGDxFWNRutq5F7iH2yqgNdjhEcAEYG1vVVs3JHeeiTvjGmlmNqtyUn5OlgcC3wxj9rBWMEoKHBQY0StqZLXng==
+
 read-pkg@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/read-pkg/-/read-pkg-4.0.1.tgz#963625378f3e1c4d48c85872b5a6ec7d5d093237"

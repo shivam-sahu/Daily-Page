@@ -11,5 +11,10 @@ export default function debounce(a, b, c) {
 }
 
 export function removeHTMLTags(str) {
-  return (str.replace(/<[^>]*>?/gm, '')).substring(0, 30);
+  // return (str.replace(/<[^>]*>?/gm, '')).substring(0, 30);
+  if (str ===null || str === "") return null;
+  else str = str.toString();
+  return str.replace(/(<([^>]+)>)/gi, "").substring(0,30);
 };
+
+

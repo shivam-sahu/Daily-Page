@@ -16,11 +16,6 @@ class ReminderList extends Component{
     const { props: { reminders, isReminderEditing, selectedReminderId, addReminder, handleReminderClick} } = this
     return (<ScrollView>
       {
-        isReminderEditing ?
-          <View>
-            <ReminderInput />
-          </View>
-          :
           <View>
             <TouchableOpacity onPress={() => { addReminder() }}>
               <Text>Add Reminder</Text>
@@ -33,7 +28,7 @@ class ReminderList extends Component{
                   </TouchableOpacity>
                 )
                 :
-                <Text>No reminders for this date</Text>
+                null
             }
           </View>
       }

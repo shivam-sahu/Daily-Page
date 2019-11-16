@@ -10,6 +10,8 @@ import {
   HANDLE_CONTACT_CLICK,
   UPDATE_CONTACT,
   ADD_REMINDER,
+  CLOSE_REMINDER,
+  DELETE_REMINDER,
   SAVE_REMINDER,
   GET_REMINDER,
   HANDLE_DAY_PRESS,
@@ -83,9 +85,6 @@ export const saveContacts=(contacts)=>async dispatch=>{
 }
 
 export const updateContact = (contacts)=>async dispatch=>{
-  // console.log(_id);
-  // const contactID = _id;
-  // console.log(contacts);
   const request = await axios.put("/api/contact", {...contacts})
   .then(res=>res.data)
   .catch(err=>{console.log("something went wrong while updataing contacts")})
@@ -171,20 +170,42 @@ export const addReminder = (text) => async dispatch => {
   })
 }
 
-export const saveReminder = (noteID, text) => async dispatch => {
-  const request = await axios.put("/api/note/", { noteID, text })
+export const saveReminder = (id,text,seletedDate) => async dispatch => {
+
+  const timestamp = seletedDate;
+
+  const request = await axios.post("/api/reminder/", {text,timestamp })
     .then(res => res.data)
-    .catch(err => { console.log(err) })
-  // console.log(request);
+    .catch(err => { console.log("went wrong while saving reminder") })
+    console.log(request)
   dispatch({
     type: SAVE_REMINDER,
     payload: request
   })
 }
 
+export const closeReminder =()=>{
+  return {
+    type:CLOSE_REMINDER,
+    payload:null
+  }
+}
+
+export const deleteReminder =(_id)=>async dispatch=>{
+  const reminderID = _id;
+  const request = await axios.delete('/api/reminder/', { data:{reminderID}})
+    .then(res=>res.data)
+    .catch(e=>console.log("note not deleted!"))
+  ;
+  dispatch({
+    type:DELETE_REMINDER,
+    payload:request
+  })
+}
+
 
 export const getReminder = () => async dispatch => {
-  const request = await axios.get("/api/note/")
+  const request = await axios.get("/api/reminder/")
     .then(res => res.data)
     .catch(err => { console.log('something went wrong') })
   // console.log(request);
@@ -209,10 +230,9 @@ export const handleDayPress = (day)=>async dispatch=>{
   })
 }
 
-export const handleReminderClick = (text, _id) => {
+export const handleReminderClick = (reminder) => {
   const payload = {
-    text,
-    _id
+    reminder
   }
   return {
     type: HANDLE_REMINDER_CLICK,
@@ -220,11 +240,16 @@ export const handleReminderClick = (text, _id) => {
   }
 }
 
-export const updateReminder = (note) => {
-  const text = note;
-  return ({
+export const updateReminder = (reminder) =>async dispatch=> {
+  const data = {
+    reminderID:reminder._id,
+    text:reminder.text
+  }
+  const request = await axios.put('/api/reminder',{...data})
+  .then(res=>res.data)
+  .catch(e=>console.log('reminder not updated'))
+  dispatch ({
     type: UPDATE_REMINDER,
-    payload: text
+    payload: request
   })
-
 }

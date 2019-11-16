@@ -24,7 +24,14 @@ class SidebarItem extends Component{
     return (
       // <TouchableOpacity onPress={() =>{ handleNoteClick(text, _id)} }>
         <View>
-          <Text> {removeHTMLTags(text) + '...'}</Text>
+          <Text>
+            {
+              text ?
+              removeHTMLTags(text)+ '...' 
+              :
+              null
+            }
+             </Text>
         </View>
       // </TouchableOpacity>
     // <div className="SideBarItem" onClick={() => handleNoteClick(text, _id)}>

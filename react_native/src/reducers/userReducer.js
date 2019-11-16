@@ -16,6 +16,7 @@ const initialState = {
   selectedContact:null,
   reminders:[],
   isReminderEditing:false,
+  isDayClicked:false,
   selectedReminderId:null,
   selectedReminder:null,
   seletedDate:null 
@@ -113,7 +114,53 @@ const userReducer = (state=initialState, action)=>{
       return { 
         ...state, 
         seletedDate:timestamp,
-        reminders:arr
+        reminders:arr,
+        isDayClicked:true
+      }
+    }
+
+    case ('ADD_REMINDER'):{
+      return { ...state, isReminderEditing:true}
+    }
+
+    case ('CLOSE_REMINDER'):{
+      return{...state,
+        isReminderEditing:false,
+        selectedReminderId: null,
+        selectedReminder: null
+      }
+    }
+
+    case ('DELETE_REMINDER'):{
+      return{...state,
+        isReminderEditing: false,
+        selectedReminderId: null,
+        selectedReminder: null
+      }
+    }
+
+    case ('HANDLE_REMINDER_CLICK'):{
+      const { reminder:{_id}} = payload;
+      const {reminder} = payload;
+      return{...state,
+      isReminderEditing:true,
+      selectedReminderId:_id,
+      selectedReminder:reminder
+      }
+    }
+    case ('SAVE_REMINDER'):{
+      return{...state,
+        isReminderEditing:false,
+        selectedReminderId:null,
+        selectedReminder:null
+      }
+    }
+
+    case ('UPDATE_REMINDER'):{
+      return{...state,
+        isReminderEditing: false,
+        selectedReminderId: null,
+        selectedReminder: null
       }
     }
 

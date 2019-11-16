@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
+import { Card} from 'react-native-elements'
 
 class ReminderItem extends Component {
   constructor(props) {
@@ -8,10 +9,11 @@ class ReminderItem extends Component {
   }
   render() {
     // console.log(this.props)
-    const { props: {text} } = this
-    return (<View>
+    const { props: {reminder:{text}} } = this;
+    console.log(this.props.reminder)
+    return (<Card>
       <Text>{`${text}`}</Text>
-    </View>)
+    </Card>)
   }
 }
 export default ReminderItem; 
