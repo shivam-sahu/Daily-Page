@@ -1,29 +1,34 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators } from 'redux';
+import RNDateTimePicker from "@react-native-community/datetimepicker";
 import {
   View,
   Text,
   TextInput,
   KeyboardAvoidingView,
   TouchableOpacity,
-  TouchableHighlightBase
+  TouchableHighlightBase,
+  Button
 } from "react-native";
 
 import { saveReminder, closeReminder, deleteReminder, updateReminder} from '../../../actions/userActions';
 import Icon from 'react-native-vector-icons/Ionicons';
+// import { Button } from 'react-native-paper';
 
 
 class ReminderInput extends Component{
   constructor(props){
     super(props);
     this.state={
-      text:''
+      text:'',
+      clicked : false,
+      isoTime : ""
     }
   }
 componentDidMount(){
   this.props.selectedReminderId ?
-    this.setState({ text: this.props.selectedReminder.text})
+    this.setState({ text: this.props.selectedReminder.text, isoTime: new Date(this.props.seletedDate).toISOString()})
   :
   null
 }
@@ -65,6 +70,30 @@ componentDidMount(){
           multiline={true}
           autoFocus={true}
         />
+        <View> 
+        <Text>{new Date(this.state.isoTime).toUTCString()}</Text>
+        </View>
+        <Button title="Set Time" onPress = {() => {this.setState({clicked:true})}} />
+      {this.state.clicked ? 
+      <RNDateTimePicker mode="time" value={new Date()} onChange = {
+        (event, date) => {
+          this.setState({clicked : false});
+          // console.log(date);
+          let tmp = new Date(date);
+          let hours = tmp.getHours() + 5;
+          let minutes = tmp.getMinutes() + 30;
+          let prevTime = this.props.seletedDate;
+          tmp = new Date(prevTime);
+          let year = tmp.getFullYear();
+          let dt = tmp.getDate()
+          let month = tmp.getMonth();
+          let newDate = new Date(year, month,dt, hours, minutes);
+          this.setState({isoTime:newDate.toISOString()});
+          console.log(newDate.toISOString());
+
+        }
+      } /> 
+      : null}   
       </View>
     );
   }
@@ -79,7 +108,7 @@ componentDidMount(){
     selectedReminderId ? 
     updateReminder(selectedReminder)
     :
-    saveReminder(this.state.text,seletedDate)
+    saveReminder(this.state.text,this.state.isoTime);
 
   }
 }

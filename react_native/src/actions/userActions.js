@@ -37,6 +37,7 @@ const getToken = async () => {
     }
   } catch (e) {
     // error reading value
+    console.log("login error")
     throw (e)
   }
 }
@@ -175,7 +176,7 @@ export const updateEditorText =(note)=>{
 export const addReminder = (text) => async dispatch => {
 
   const request = await axios.post("/api/note/", { text })
-    .then(res => res.data)
+    .then(res => res.data).catch(console.log("can't hit api/note"))
   // console.log(request);
   dispatch({
     type: ADD_REMINDER,
@@ -183,7 +184,7 @@ export const addReminder = (text) => async dispatch => {
   })
 }
 
-export const saveReminder = (id,text,seletedDate) => async dispatch => {
+export const saveReminder = (text,seletedDate) => async dispatch => {
 
   const timestamp = seletedDate;
 

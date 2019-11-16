@@ -27,8 +27,8 @@ export const loginUser =  (userData) => async dispatch => {
   await axios.post('/api/user/login',userData)
     .then(async res => {
       const token = res.data.token;
-      // console.log(token);
       await AsyncStorage.setItem("jwtToken",token);
+      console.log(token);
       // history.push("/")
       dispatch ({
         type : "LOGGED_IN",
