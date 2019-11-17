@@ -18,10 +18,14 @@ router.get("/reminder",passport.authenticate('jwt',{session:false}),(req,res) =>
       
     let arr = [];
     // let reqDate = new Date(req.body.timestamp);
-    let reqDate = req.query.timestamp;
-    console.log(req.query);
+    let reqDate = req.query.dateString;
+    // console.log(req.query);
      // console.log("log",doc);
-    arr = doc.filter((item) => item.date === reqDate);
+    arr = doc.filter((item) => {
+      let {date:dateString} = item;
+      dateString = dateString.substring(0, 10);
+      return(dateString === reqDate)
+    });
     res.status(200).json({"msg":"success",arr});  
     }  
   });
