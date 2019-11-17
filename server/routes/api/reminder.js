@@ -65,9 +65,12 @@ router.put("/reminder",passport.authenticate('jwt',{session:false}),(req,res) =>
 
   const reminderID = req.body.reminderID
   const text = req.body.text;
+  let date = new Date(req.body.date);
+  date = date.toISOString();
+  console.log(date);
   
   // console.log(noteID, text);
-  Reminder.findOneAndUpdate({_id:reminderID},{text,"date": new Date(req.body.date)},{new:true}).then(doc => {
+  Reminder.findOneAndUpdate({_id:reminderID},{text,"date": date},{new:true}).then(doc => {
     
     res.status(200).json({"msg":"success","doc":doc});
 

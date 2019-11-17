@@ -31,11 +31,10 @@ router.post("/note",passport.authenticate('jwt',{session:false}),(req,res) => {
 // to delete a note
 router.delete("/note",passport.authenticate('jwt',{session:false}),(req,res) => {
   const id = req.body.noteID;
-  Notes.remove({_id:req.body.noteID}, (err) => {
-    if(err) res.status(400).json({"msg":"faliure"});
-
-    else res.status(200).json({"msg":"success"});
-    
+  console.log(id);
+  Notes.deleteOne({ _id: req.body.noteID }, err => {
+    if (err) res.status(400).json({ msg: "faliure" });
+    else res.status(200).json({ msg: "success" });
   });
 
 });
