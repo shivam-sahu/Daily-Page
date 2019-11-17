@@ -3,6 +3,57 @@ const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 const cors = require("cors");
 const passport = require("passport");
+const UserT = require("./models/User");
+const ReminderT = require("./models/Reminder");
+
+let apiKey = require("./config/credentials").SENDGRID_API_KEY;
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(apiKey);
+
+function sendEmail(to, subject, body)
+{
+  const email = {
+    to,
+    from:"DailyPage@mail.com",
+    subject,
+    text : body,
+    html : body
+  }
+  return sgMail.send(email);
+}
+
+setInterval(()=>{
+  
+  // serach Reminder
+ ReminderT.find({}, (err,doc) => {
+  if(!err)
+  {
+    let toBeSentArr = [];
+    let curTime = Date.now();
+
+    toBeSentArr = doc.filter((e) => (new Date(e.date) - curTime) < 300000 );
+    toBeSentArr.forEach((x) => {
+      UserT.findById(x.user).then((doc) => {
+        let email = doc.email;
+        sendEmail(email,"DialyPage Notification", `You Have A Reminder Set Up ... ${x.text} `).then(d => {
+          console.log("Done");
+
+          }).catch(e => {
+            console.log(err);
+          });
+
+      }).catch((err) => {
+        console.log(err);
+
+      })
+    });
+
+  }
+ });
+
+
+}, 300000)
+
 
 //? express
 const app = express();

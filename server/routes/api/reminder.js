@@ -1,7 +1,6 @@
 let apiKey = require("../../config/credentials").SENDGRID_API_KEY;
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(apiKey);
-console.log("here", apiKey);
 const express = require("express");
 const router = express.Router();
 const User = require('../../models/User');
@@ -61,22 +60,23 @@ router.post("/reminder",passport.authenticate('jwt',{session:false}),(req,res) =
     if(err) res.status(400).json({"msg":"faliure"});
     else 
     {
-          User.findById(user).then((doc) => {
-          let email = doc.email
-          console.log(email);
-          sendEmail(email,"DialyPage Notification", `You Have A Reminder Set Up ... ${text} `).then(d => {
-            console.log("Done");
+        // this code was to send mail
+        //   User.findById(user).then((doc) => {
+        //   let email = doc.email
+        //   console.log(email);
+        //   sendEmail(email,"DialyPage Notification", `You Have A Reminder Set Up ... ${text} `).then(d => {
+        //     console.log("Done");
 
-            }).catch(e => {
-              console.log(err);
+        //     }).catch(e => {
+        //       console.log(err);
 
-            });
+        //     });
         
         
-        }
-        ).catch(err => {
+        // }
+        // ).catch(err => {
 
-        });
+        // });
           
           res.status(200).json({"msg":"success","reminderID":newEntry.id,"text":newEntry.text});
           
