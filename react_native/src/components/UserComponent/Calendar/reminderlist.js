@@ -17,13 +17,13 @@ class ReminderList extends Component{
     return (<ScrollView>
       {
           <View>
-            <TouchableOpacity onPress={() => { addReminder() }}>
+            <TouchableOpacity onPress={() => { this._addReminder(); }}>
               <Text>Add Reminder</Text>
             </TouchableOpacity>
             {
               reminders.length ?
                 reminders.map((reminder) =>
-                  <TouchableOpacity key={reminder._id} onPress={() => { handleReminderClick(reminder) }}>
+                  <TouchableOpacity key={reminder._id} onPress={() => { this._handleReminderClick(reminder) }}>
                     <ReminderItem reminder={reminder} />
                   </TouchableOpacity>
                 )
@@ -33,6 +33,14 @@ class ReminderList extends Component{
           </View>
       }
     </ScrollView>)
+  }
+  _addReminder =()=>{
+    this.props.addReminder();
+    this.props.navigateToInput();
+  }
+  _handleReminderClick=(reminder)=>{
+    this.props.handleReminderClick(reminder);
+    this.props.navigateToInput();
   }
 }
 

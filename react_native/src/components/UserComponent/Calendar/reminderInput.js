@@ -6,60 +6,68 @@ import {
   View,
   Text,
   TextInput,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-  TouchableHighlightBase,
   Button
 } from "react-native";
 
-import { saveReminder, closeReminder, deleteReminder, updateReminder} from '../../../actions/userActions';
+import {
+  handleAndroidBackButton,
+  removeAndroidBackButtonHandler
+} from '../../backNavigator';
+
+import {
+  saveReminder,
+  closeReminder,
+  deleteReminder,
+  handleDayPress,
+  updateReminder
+} from "../../../actions/userActions";
+import { FlatHeader, Group } from "react-native-flat-header";
 import Icon from 'react-native-vector-icons/Ionicons';
-// import { Button } from 'react-native-paper';
 
-
-class ReminderInput extends Component{
-  constructor(props){
+class ReminderInput extends Component {
+  constructor(props) {
     super(props);
-    this.state={
-      text:'',
-      clicked : false,
-      isoTime : ""
-    }
+    this.state = {
+      text: "",
+      clicked: false,
+      isoTime: ""
+    };
   }
-componentDidMount(){
-  this.props.selectedReminderId ?
-    this.setState({ text: this.props.selectedReminder.text, isoTime: new Date(this.props.seletedDate).toISOString()})
-  :
-  null
-}
-  render(){
+  componentDidMount() {
+    this.props.selectedReminderId
+      ? this.setState({
+          text: this.props.selectedReminder.text,
+          isoTime: new Date(this.props.selectedReminder.date).toISOString()
+        })
+      : this.setState({
+          isoTime: new Date(this.props.seletedDate).toISOString()
+        });
+    handleAndroidBackButton(() => this._closeReminder());
+  }
+  componentWillUnmount() {
+    removeAndroidBackButtonHandler();
+  }
+  render() {
+    console.log(this.props.selectedReminder)
     return (
       <View>
-        <TouchableOpacity
-          onPress={() => this.props.closeReminder()}
-        >
-        <Icon name="ios-close" size={45} />
-        </TouchableOpacity>
-        {
-        this.props.selectedReminderId ?
-            <TouchableOpacity
-              onPress={() => this.props.deleteReminder(this.props.selectedReminderId)}
-            >
-              <Icon name="ios-trash" size={30} />
-            </TouchableOpacity> :
-            null
-        }
-        
+        <FlatHeader
+          leftIcon={<Icon name="ios-close" size={45} color="#1183ca" />}
+          leftIconHandler={() => this._closeReminder()}
+          rightIcon={
+            this.props.selectedReminderId ? (
+              <Icon name="ios-trash" size={30} color="#1183ca" />
+            ) : null
+          }
+          rightIconHandler={() => this._deleteReminder()}
+          centerContent={
+            <Icon name="ios-checkmark" size={45} color="#1183ca" />
+          }
+          centerContentHandler={() => this._onSave()}
+          // style={{ bacgroundColor: "#BA68C8" }}
+          style={{ backgroundColor: "#F5FCFF" }}
+        />
 
-        <TouchableOpacity
-          onPress={() => this.props.saveReminder(
-            this.state.text,
-            this.props.seletedDate
-            )}
-        >
-          <Icon name="ios-checkmark" size={45} />
-        </TouchableOpacity>
-        
         <TextInput
           value={this.state.text}
           onChangeText={e => {
@@ -70,47 +78,76 @@ componentDidMount(){
           multiline={true}
           autoFocus={true}
         />
-        <View> 
-        <Text>{new Date(this.state.isoTime).toUTCString()}</Text>
+        <View>
+          <Text>{new Date(this.state.isoTime).toUTCString()}</Text>
         </View>
-        <Button title="Set Time" onPress = {() => {this.setState({clicked:true})}} />
-      {this.state.clicked ? 
-      <RNDateTimePicker mode="time" value={new Date()} onChange = {
-        (event, date) => {
-          this.setState({clicked : false});
-          // console.log(date);
-          let tmp = new Date(date);
-          let hours = tmp.getHours() + 5;
-          let minutes = tmp.getMinutes() + 30;
-          let prevTime = this.props.seletedDate;
-          tmp = new Date(prevTime);
-          let year = tmp.getFullYear();
-          let dt = tmp.getDate()
-          let month = tmp.getMonth();
-          let newDate = new Date(year, month,dt, hours, minutes);
-          this.setState({isoTime:newDate.toISOString()});
-          console.log(newDate.toISOString());
-
-        }
-      } /> 
-      : null}   
+        <Button
+          title="Set Time"
+          onPress={() => {
+            this.setState({ clicked: true });
+          }}
+        />
+        {this.state.clicked ? (
+          <RNDateTimePicker
+            mode="time"
+            value={new Date()}
+            onChange={(event, date) => {
+              this.setState({ clicked: false });
+              // console.log(date);
+              let tmp = new Date(date);
+              let hours = tmp.getHours() + 5;
+              let minutes = tmp.getMinutes() + 30;
+              let prevTime = this.props.seletedDate;
+              tmp = new Date(prevTime);
+              let year = tmp.getFullYear();
+              let dt = tmp.getDate();
+              let month = tmp.getMonth();
+              let newDate = new Date(year, month, dt, hours, minutes);
+              this.setState({ isoTime: newDate.toISOString() });
+              console.log(newDate.toISOString());
+            }}
+          />
+        ) : null}
       </View>
     );
   }
-  handleTextChange=(value)=>{
+
+  handleTextChange = value => {
     this.setState({
-      text:value
-    })
-  }
+      text: value
+    });
+  };
 
-  _onSave = ()=>{
-    const { props: { selectedReminder,selectedReminderId, seletedDate, updateReminder, saveReminder}} =this;
-    selectedReminderId ? 
-    updateReminder(selectedReminder)
-    :
-    saveReminder(this.state.text,this.state.isoTime);
+  _closeReminder = async () => {
+    await this.props.closeReminder();
+    this.props.navigation.navigate("ReminderCalendar");
+    this.props.handleDayPress(this.props.seletedDate);
+  };
 
-  }
+  _deleteReminder = async () => {
+    await this.props.deleteReminder(this.props.selectedReminderId);
+    this.props.navigation.navigate("ReminderCalendar");
+    this.props.handleDayPress(this.props.seletedDate);
+  };
+
+  _onSave = async () => {
+    const {
+      props: {
+        selectedReminder,
+        selectedReminderId,
+        seletedDate,
+        updateReminder,
+        saveReminder
+      }
+    } = this;
+    selectedReminderId
+      ? await updateReminder({...selectedReminder, date:this.state.isoTime,text:this.state.text})
+      : await saveReminder(this.state.text, this.state.isoTime);
+
+    this.props.navigation.navigate("ReminderCalendar");
+    console.log(this.props.seletedDate);
+    this.props.handleDayPress(this.props.seletedDate);
+  };
 }
 
 const mapDispatchToProps = dispatch => {
@@ -119,6 +156,7 @@ const mapDispatchToProps = dispatch => {
       saveReminder,
       closeReminder,
       deleteReminder,
+      handleDayPress,
       updateReminder
     },
     dispatch

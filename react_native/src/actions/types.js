@@ -1,5 +1,7 @@
 export const TEST_DISPATCH = 'TEST_DISPATCH';
 export const GET_ERRORS = 'GET_ERRORS';
+export const CLOSE_EDITOR = "CLOSE_EDITOR";
+export const DELETE_NOTE = "DELETE_NOTE";
 export const LOGGED_IN = 'LOGGED_IN';
 export const UPDATE_EDITOR_TEXT = 'UPDATE_EDITOR_TEXT';
 export const ADD_EDITOR = 'ADD_EDITOR';
@@ -16,6 +18,7 @@ export const UPDATE_CONTACT = 'UPDATE_CONTACT';
 export const HANDLE_CONTACT_CLICK = 'HANDLE_CONTACT_CLICK';
 //? reminders
 export const ADD_REMINDER = 'ADD_REMINDER';
+export const ADD_REMINDER_BTN = "ADD_REMINDER_BTN";
 export const SAVE_REMINDER = 'SAVE_REMINDER';
 export const GET_REMINDER = 'GET_REMINDER';
 export const HANDLE_REMINDER_CLICK = 'HANDLE_REMINDER_CLICK';

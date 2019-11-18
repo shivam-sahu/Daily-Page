@@ -1,8 +1,10 @@
 import { 
   UPDATE_EDITOR_TEXT, 
   ADD_EDITOR, 
+  DELETE_NOTE,
   HANDLE_NOTE_CLICK,
   GET_DATA,
+  CLOSE_EDITOR,
   DONE_CHANGES,
   GET_CONTACTS,
   ADD_CONTACT,
@@ -12,6 +14,7 @@ import {
   HANDLE_CONTACT_CLICK,
   UPDATE_CONTACT,
   ADD_REMINDER,
+  ADD_REMINDER_BTN,
   CLOSE_REMINDER,
   DELETE_REMINDER,
   SAVE_REMINDER,
@@ -70,9 +73,14 @@ export const deleteContact = (contactID)=>async dispatch=>{
 }
 
 export const getContacts=()=>async dispatch=>{
+  
+  await getToken();
   const request = await axios.get("/api/contact/")
   .then(res=>res.data)
-  .catch(err=>{console.log("cannot fetch contacts")})
+  .catch(err=>{
+    console.log("cannot fetch contacts")
+  // throw(err)
+  })
 
   dispatch({
     type:GET_CONTACTS,
@@ -125,11 +133,28 @@ export const addEditor =(text)=>async dispatch=>{
   })
 }
 
+export const closeEditor =()=>{
+  return {
+    type: CLOSE_EDITOR,
+    payload:null
+  };
+}
+export const deleteNotes = (noteID)=>async dispatch=>{
+  // console.log(noteID)
+  const request = await axios.delete("/api/note/",{data:{noteID}})
+  .then(res=>res.data)
+  .catch(err=>{console.log(err)})
+
+  dispatch({
+    type:DELETE_NOTE,
+    payload:request
+  })
+}
 export const doneChanges =(noteID,text)=>async dispatch=>{  
   const request = await axios.put("/api/note/",{noteID, text})
   .then(res=>res.data)
   .catch(err=>{console.log(err)})
-  NavigationService.navigate('User');
+  // NavigationService.navigate('User');
   dispatch({
     type:DONE_CHANGES,
     payload: request
@@ -138,9 +163,10 @@ export const doneChanges =(noteID,text)=>async dispatch=>{
 
 
 export const getData =()=>async dispatch =>{
+  await getToken();
   const request = await axios.get("/api/note/")
   .then(res=>res.data)
-  .catch(err=>{console.log('something went wrong')})
+  .catch(err=>{console.log('cant fetch notes')})
   // console.log(request);
 
   dispatch({
@@ -175,13 +201,17 @@ export const updateEditorText =(note)=>{
 
 export const addReminder = (text) => async dispatch => {
 
-  const request = await axios.post("/api/note/", { text })
-    .then(res => res.data).catch(console.log("can't hit api/note"))
-  // console.log(request);
-  dispatch({
-    type: ADD_REMINDER,
-    payload: request
-  })
+  // const request = await axios.post("/api/reminder/", { text })
+  //   .then(res => res.data).catch(console.log("can't hit reminder"))
+  // // console.log(request);
+  // dispatch({
+  //   type: ADD_REMINDER,
+  //   payload: request
+  // })
+  return {
+    type:ADD_REMINDER_BTN,
+    payload:null
+  }
 }
 
 export const saveReminder = (text,seletedDate) => async dispatch => {
@@ -197,6 +227,7 @@ export const saveReminder = (text,seletedDate) => async dispatch => {
     payload: request
   })
 }
+
 
 export const closeReminder =()=>{
   return {
@@ -217,30 +248,18 @@ export const deleteReminder =(_id)=>async dispatch=>{
   })
 }
 
-
-export const getReminder = () => async dispatch => {
-  const request = await axios.get("/api/reminder/")
-    .then(res => res.data)
-    .catch(err => { console.log('something went wrong') })
-  // console.log(request);
-
-  dispatch({
-    type: GET_REMINDER,
-    payload: request
-  })
-}
-
-export const handleDayPress = (day)=>async dispatch=>{
-  const {timestamp} = day;
+export const handleDayPress = (dateString)=>async dispatch=>{
+  // const {dateString} = day;
   // console.log(day)
-  const request = await axios.get('/api/reminder',{params:{timestamp}})
-  .then(res=>res.data)
-  .catch(err=>{console.log('cant fetch reminders')})
-  // console.log(request);
-  // NavigationService.navigate('ReminderList');
+  const request = await axios
+    .get("/api/reminder", { params: { dateString } })
+    .then(res => res.data)
+    .catch(err => {
+      console.log("cant fetch reminders");
+    });
   dispatch ({
     type: HANDLE_DAY_PRESS,
-    payload:{day,arr:request.arr}
+    payload:{dateString,arr:request.arr}
   })
 }
 
@@ -257,7 +276,8 @@ export const handleReminderClick = (reminder) => {
 export const updateReminder = (reminder) =>async dispatch=> {
   const data = {
     reminderID:reminder._id,
-    text:reminder.text
+    text:reminder.text,
+    date:reminder.date
   }
   const request = await axios.put('/api/reminder',{...data})
   .then(res=>res.data)

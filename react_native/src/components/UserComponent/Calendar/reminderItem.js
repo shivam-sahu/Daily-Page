@@ -9,11 +9,34 @@ class ReminderItem extends Component {
   }
   render() {
     // console.log(this.props)
-    const { props: {reminder:{text}} } = this;
+    const { props: {reminder:{text,date}} } = this;
+    let newdate = new Date(date);
+    newdate= newdate.toTimeString();
+    newdate = newdate.substring(0,5)+" "+newdate.substring(9,12);
     console.log(this.props.reminder)
-    return (<Card>
-      <Text>{`${text}`}</Text>
-    </Card>)
+    return (
+      <Card
+        containerStyle={{
+          borderRadius: 10,
+          borderWidth: 2,
+          borderColor: "#39CCCC",
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 10,
+          elevation: 1,
+          marginLeft: 5,
+          marginRight: 5,
+          marginTop: 10,
+          justifyContent:"space-between",
+          flexDirection:"row",
+          position:"relative"
+        }}
+      >
+        <Text>{`${text}`}</Text>
+        <Text>{`${newdate}`}</Text>
+      </Card>
+    );
   }
 }
 export default ReminderItem; 

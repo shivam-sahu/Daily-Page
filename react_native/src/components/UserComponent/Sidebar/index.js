@@ -4,10 +4,8 @@ import {bindActionCreators} from 'redux';
 import { Button, ScrollView, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 import SiderbarItem from '../SidebarItem';
-import { addEditor, doneChanges, handleNoteClick} from '../../../actions/userActions';
-import Editor  from '../Editor';
+import { addEditor, doneChanges,getData, handleNoteClick} from '../../../actions/userActions';
 import { Header } from 'react-native-elements';
-// import { Icon } from 'react-native-elements';
 
 class Sidebar extends Component{
   constructor(props){
@@ -19,17 +17,23 @@ class Sidebar extends Component{
     }
   }
 
+  componentDidMount(){
+    this.props.getData();
+  }
+
   render(){
     const data = this.props.notes;
     const { showEditor, handleNoteClick} = this.props;
-    // console.log(this.props.navigation)
     return (<View>
+      <View style = {styles.header}>
+
       <Header
-        leftComponent={{ icon: 'menu', color: '#fff' }}
-        centerComponent={{ text: 'Notes', style: { color: '#fff' } }}
-        rightComponent={{ icon: 'home', color: '#fff' }}
+        // leftComponent={{ icon: 'menu', color: '#fff' }}
+        centerComponent={{ text: 'Notes', style: { color: '#fff'  } }}
+        // rightComponent={{ icon: 'home', color: '#fff' }}
         backgroundColor='#1e90ff'
-      />
+        />
+        </View>
       <ScrollView>
         <Button
           onPress={() => this.props.addEditor(this.props.initialContent)}
@@ -37,7 +41,8 @@ class Sidebar extends Component{
         <View>
           {
             showEditor ?
-              <Editor />
+              // <Editor />
+              this.props.navigation.navigate('Editor')
               :
               data ?
                 data.map((note) => {
@@ -51,21 +56,6 @@ class Sidebar extends Component{
         </View>
       </ScrollView>
     </View>
-      
-    // <div className="SideBar">
-    //   <button type='button' onClick={() => this.props.addEditor(this.props.initialContent)}>
-    //     New Note
-    //   </button>
-    //   <button onClick={() => this.props.doneChanges(this.props.selectedNoteId, this.props.editorContent)}>Done</button>
-      // {
-      //   data?
-      //   data.map((note)=>{
-      //     // console.log(note._id.toString())
-      //     return (<SiderbarItem text={note.text} key={note._id} _id = {note._id.toString()}/>)
-      //   })
-      //   :null
-      // }
-    // </div>
   )}
 }
 
@@ -74,14 +64,21 @@ const mapDispatchToProps = dispatch=>{
   return (bindActionCreators({
     addEditor,
     doneChanges,
+    getData,
     handleNoteClick
   },dispatch));
 }
 const mapStateToProps = (state)=>{
-
-  // console.log(state);
   const {user} = state;
   return user;
 }
+
+const styles = StyleSheet.create({
+  header:{
+    height:10,
+    marginBottom:50,
+    paddingTop:0
+  }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
