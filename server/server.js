@@ -10,6 +10,8 @@ let apiKey = require("./config/credentials").SENDGRID_API_KEY;
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(apiKey);
 
+const CheckTimer = 180000; // 3 mins
+
 function sendEmail(to, subject, body)
 {
   const email = {
@@ -29,21 +31,22 @@ setInterval(()=>{
   if(!err)
   {
     let toBeSentArr = [];
-    let curTime = Date.now();
+    let curTime = new Date(Date.now() + (330 * 60000));
+    console.log("cycle started at", new Date(curTime).toISOString())
 
-    toBeSentArr = doc.filter((e) => (new Date(e.date) - curTime) < 300000 );
+    toBeSentArr = doc.filter((e) => ((new Date(e.date) - curTime >= 0) && (new Date(e.date) - curTime <= CheckTimer) ));
     toBeSentArr.forEach((x) => {
       UserT.findById(x.user).then((doc) => {
         let email = doc.email;
         sendEmail(email,"DialyPage Notification", `You Have A Reminder Set Up ... ${x.text} `).then(d => {
-          console.log("Done");
+          console.log("Done", new Date(x.date).toISOString());
 
           }).catch(e => {
-            console.log(err);
+            console.log(e);
           });
 
-      }).catch((err) => {
-        console.log(err);
+      }).catch((e) => {
+        console.log(e);
 
       })
     });
@@ -52,7 +55,7 @@ setInterval(()=>{
  });
 
 
-}, 300000)
+}, CheckTimer);
 
 
 //? express
