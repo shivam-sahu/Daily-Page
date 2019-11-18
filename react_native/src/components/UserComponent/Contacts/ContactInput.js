@@ -93,6 +93,7 @@ class ContactInput extends Component {
               // defaultValue={mobileNos[0]}
               value={this.state.firstMobile}
               blurOnSubmit={true}
+              keyboardType='phone-pad'
               onChangeText={value => {
                 this.setState({ firstMobile: value });
               }}
@@ -104,18 +105,20 @@ class ContactInput extends Component {
               // defaultValue={mobileNos[1]}
               value={this.state.secondMobile}
               blurOnSubmit={true}
+              keyboardType='phone-pad'
               onChangeText={value => {
                 this.setState({ secondMobile: value });
               }}
             />
           </View>
-        </View>
+        </View> 
         <View>
           <TextInput
             placeholder="Email"
             // defaultValue={data.email ? data.email : ''}
             value={this.state.email}
             blurOnSubmit={true}
+            keyboardType='email-address'
             onChangeText={email => {
               this.setState({ email });
             }}

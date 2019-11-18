@@ -25,20 +25,14 @@ class Sidebar extends Component{
   render(){
     const data = this.props.notes;
     const { showEditor, handleNoteClick} = this.props;
-    return (<View>
-      <View style = {styles.header}>
-
-      <Header
-        // leftComponent={{ icon: 'menu', color: '#fff' }}
-        centerComponent={{ text: 'Notes', style: { color: '#fff'  } }}
-        // rightComponent={{ icon: 'home', color: '#fff' }}
-        backgroundColor='#1e90ff'
-        />
-        </View>
+    return (
       <ScrollView>
+        <View style={{ margin: 5 }}>
+
         <Button
-          onPress={() => this.props.addEditor(this.props.initialContent)}
-          title="New Note" />
+        onPress={() => this.props.addEditor(this.props.initialContent)}
+        title="New Note" />
+        </View>
         <View>
           {
             showEditor ?
@@ -82,7 +76,7 @@ class Sidebar extends Component{
           }
         </View>
       </ScrollView>
-    </View>
+
   )}
 }
 

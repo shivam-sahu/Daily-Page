@@ -78,7 +78,7 @@ class ReminderInput extends Component {
           multiline={true}
           autoFocus={true}
         />
-        <View>
+        <View style={{margin:10}}>
           <Text>{new Date(this.state.isoTime).toUTCString()}</Text>
         </View>
         <Button

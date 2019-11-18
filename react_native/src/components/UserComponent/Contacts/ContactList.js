@@ -25,7 +25,7 @@ class ContactList extends Component{
       <ScrollView>
         {
           
-          <View>
+          <View style={{margin:5}}>
             <Button
               onPress={() => {
                 this._addContact();
