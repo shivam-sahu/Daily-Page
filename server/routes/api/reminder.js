@@ -1,3 +1,6 @@
+let apiKey = require("../../config/credentials").SENDGRID_API_KEY;
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(apiKey);
 const express = require("express");
 const router = express.Router();
 const User = require('../../models/User');
@@ -6,6 +9,19 @@ const Reminder = require('../../models/Reminder');
 const passport = require('passport');
 
 const softDateMatch = (d1, d2) => d1.getFullYear() == d2.getFullYear() && d1.getMonth() == d2.getMonth() && d1.getDay() == d2.getDay();
+
+function sendEmail(to, subject, body)
+{
+  const email = {
+    to,
+    from:"DailyPage@mail.com",
+    subject,
+    text : body,
+    html : body
+  }
+  return sgMail.send(email);
+}
+
 
 
 // to get notes
@@ -31,7 +47,6 @@ router.get("/reminder",passport.authenticate('jwt',{session:false}),(req,res) =>
   });
 });
 
-
 // to add a note
 router.post("/reminder",passport.authenticate('jwt',{session:false}),(req,res) => {
   const text = req.body.text;
@@ -43,9 +58,33 @@ router.post("/reminder",passport.authenticate('jwt',{session:false}),(req,res) =
 
   newEntry.save((err,doc) => {
     if(err) res.status(400).json({"msg":"faliure"});
-    else res.status(200).json({"msg":"success","reminderID":newEntry.id,"text":newEntry.text});
+    else 
+    {
+        // this code was to send mail
+        //   User.findById(user).then((doc) => {
+        //   let email = doc.email
+        //   console.log(email);
+        //   sendEmail(email,"DialyPage Notification", `You Have A Reminder Set Up ... ${text} `).then(d => {
+        //     console.log("Done");
+
+        //     }).catch(e => {
+        //       console.log(err);
+
+        //     });
+        
+        
+        // }
+        // ).catch(err => {
+
+        // });
+          
+          res.status(200).json({"msg":"success","reminderID":newEntry.id,"text":newEntry.text});
+          
+      //sendEmail()
+    }
   });
 });
+
 
 // to delete a note
 router.delete("/reminder",passport.authenticate('jwt',{session:false}),(req,res) => {
