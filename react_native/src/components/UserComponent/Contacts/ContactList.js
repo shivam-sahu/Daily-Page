@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View,Text, ScrollView, TouchableOpacity} from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Button } from "react-native";
 import {bindActionCreators} from 'redux';
 import {connect } from 'react-redux';
 
@@ -21,31 +21,42 @@ class ContactList extends Component{
   render(){
     // console.log()
     const { props: { contacts, isContactEditing, selectedContactId, addContact, handleContactClick}} = this
-    return(<ScrollView>
-      {
-        // isContactEditing ? 
-        // // <View>
-        // //   <ContactInput />
-        // // </View>
-        // this.props.navigation.navigate('ContactInput') 
-        // :
-        <View>
-            <TouchableOpacity onPress={() => { this._addContact() }}>
-              <Text>Add Contact</Text>
-            </TouchableOpacity>
+    return (
+      <ScrollView>
         {
-          contacts.length ?
-            contacts.map((contact) =>
-              <TouchableOpacity key={contact._id} onPress={() => { this._handleContactClick(contact)}}>
-                <ContactItem contact={contact} />
-              </TouchableOpacity>
-            )
-            :
-            <Text>Your contact list is empty add someone </Text>
+          
+          <View>
+            <Button
+              onPress={() => {
+                this._addContact();
+              }}
+              title="New Contact"
+            />
+            {/* <TouchableOpacity
+              onPress={() => {
+                this._addContact();
+              }}
+            >
+              <Text>Add Contact</Text>
+            </TouchableOpacity> */}
+            {contacts.length ? (
+              contacts.map(contact => (
+                <TouchableOpacity
+                  key={contact._id}
+                  onPress={() => {
+                    this._handleContactClick(contact);
+                  }}
+                >
+                  <ContactItem contact={contact} />
+                </TouchableOpacity>
+              ))
+            ) : (
+              <Text>Your contact list is empty add someone </Text>
+            )}
+          </View>
         }
-        </View>
-      }
-    </ScrollView>)
+      </ScrollView>
+    );
   }
   _addContact =()=>{
     this.props.addContact();

@@ -141,7 +141,12 @@ const userReducer = (state=initialState, action)=>{
       };
     }
     case "DONE_CHANGES": {
-      return { ...state };
+      return {
+        ...state,
+        editorContent: "",
+        selectedNoteId: null,
+        showEditor: false
+      };
     }
     //? remider reducers
 

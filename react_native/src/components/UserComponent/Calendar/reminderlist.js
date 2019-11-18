@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import ReminderInput from './reminderInput';
 import ReminderItem from './reminderItem';
 import {addReminder,handleReminderClick} from '../../../actions/userActions';
+import Icon from "react-native-vector-icons/Ionicons";
 
 class ReminderList extends Component{
   constructor(props){
@@ -14,25 +15,45 @@ class ReminderList extends Component{
   }
   render(){
     const { props: { reminders, isReminderEditing, selectedReminderId, addReminder, handleReminderClick} } = this
-    return (<ScrollView>
-      {
+    return (
+      <ScrollView>
+        {
           <View>
-            <TouchableOpacity onPress={() => { this._addReminder(); }}>
-              <Text>Add Reminder</Text>
+            <TouchableOpacity
+              onPress={() => {
+                this._addReminder();
+              }}
+              style={
+                {
+                  // position: "absolute",
+                  // alignSelf: "center",
+                  // bottom: "-5%"
+                  // position: "absolute",
+                  marginLeft: 10,
+                  marginTop:10,
+                  elevation:1
+                  // marginBottom: 20
+                }
+              }
+            >
+              <Icon name="ios-add-circle" size={55} color="#00a2db" />
             </TouchableOpacity>
-            {
-              reminders.length ?
-                reminders.map((reminder) =>
-                  <TouchableOpacity key={reminder._id} onPress={() => { this._handleReminderClick(reminder) }}>
+            {reminders.length
+              ? reminders.map(reminder => (
+                  <TouchableOpacity
+                    key={reminder._id}
+                    onPress={() => {
+                      this._handleReminderClick(reminder);
+                    }}
+                  >
                     <ReminderItem reminder={reminder} />
                   </TouchableOpacity>
-                )
-                :
-                null
-            }
+                ))
+              : null}
           </View>
-      }
-    </ScrollView>)
+        }
+      </ScrollView>
+    );
   }
   _addReminder =()=>{
     this.props.addReminder();

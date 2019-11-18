@@ -10,8 +10,9 @@ class ReminderItem extends Component {
   render() {
     // console.log(this.props)
     const { props: {reminder:{text,date}} } = this;
-    let newdate = new Date(date);
-    newdate= newdate.toTimeString();
+    let newdate = new Date(date) ;
+    let newDate = new Date(newdate - (330*60000)); 
+    newdate= newDate.toTimeString();
     newdate = newdate.substring(0,5)+" "+newdate.substring(9,12);
     console.log(this.props.reminder)
     return (
