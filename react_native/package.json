@@ -16,7 +16,7 @@
     "ngrok": "^3.2.5",
     "react": "16.9.0",
     "react-ionicons": "^3.0.1",
-    "react-native": "0.61.3",
+    "react-native": "0.62.3",
     "react-native-calendars": "^1.212.0",
     "react-native-elements": "^1.2.7",
     "react-native-flat-header": "^1.0.7",
