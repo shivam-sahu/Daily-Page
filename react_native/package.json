@@ -24,7 +24,7 @@
     "react-native-keyboard-accessory": "^0.1.10",
     "react-native-paper": "^3.2.1",
     "react-native-pell-rich-editor": "^1.0.4",
-    "react-native-reanimated": "^1.4.0",
+    "react-native-reanimated": "^2.10.0",
     "react-native-screens": "^2.0.0-alpha.8",
     "react-native-vector-icons": "^6.6.0",
     "react-native-webview": "^7.4.3",
